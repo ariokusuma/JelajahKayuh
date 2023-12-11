@@ -1,9 +1,9 @@
 
-#JelajahKayuh
+# JelajahKayuh
 JelajahKayuh adalah ... 
 
 
-##Tim Kami
+## Tim Kami
 
 Kami Kelompok 15 dari Kelas Sertifikasi LSP Web Development yang terdiri atas:
 
@@ -13,5 +13,5 @@ Kami Kelompok 15 dari Kelas Sertifikasi LSP Web Development yang terdiri atas:
 | 2   | [Apriani Nur Raina](1202200195)                              | 1202200164 | 
 
 
-##Daftar Fitur JelajahKayuh
+## Daftar Fitur JelajahKayuh
 
