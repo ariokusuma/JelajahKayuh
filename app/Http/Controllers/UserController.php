@@ -12,13 +12,18 @@ use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
 
-    // Regist
+    // Routing Controllers
     public function register()
     {
-        // $data['title'] = 'register';
-        // return view('auth.register', $data);
         return view('auth.register');
     }
+
+    public function login() {
+        return view('auth.login');
+    }
+
+
+    // ===== Actions Controllers =====
 
     public function register_action(Request $request)
     {
@@ -78,9 +83,7 @@ class UserController extends Controller
         return redirect()->route('login')->with('success', 'Registrasi Berhasil!');
     }
 
-    public function login() {
-        return view('auth.login');
-    }
+
 
     public function login_action(Request $request) {
         $request->validate([
