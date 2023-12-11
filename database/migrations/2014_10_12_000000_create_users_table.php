@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::dropIfExists('users');
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('role');
+            $table->bigInteger('role')->default(1);
             $table->string('name');
             $table->integer('nohp');
             $table->string('email')->unique();
