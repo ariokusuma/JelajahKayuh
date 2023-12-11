@@ -27,6 +27,7 @@ class UserController extends Controller
             'name' => 'required',
             'nohp' => 'required',
             'email' => 'required|email|unique:users',
+            'photo' => 'image|mimes:jpeg,png,jpg|max:2048',
             'password' => [
                 'required',
                 'confirmed',
@@ -66,6 +67,11 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('photos', 'public'); // Save the photo to the 'public/photos' directory
+            $user->photo = $photoPath;
+        }
 
         $user->save();
 

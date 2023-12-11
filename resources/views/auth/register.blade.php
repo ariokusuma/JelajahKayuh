@@ -41,6 +41,12 @@
                             <p class="mt-2 text-xs text-red-500">{{ $message }}</p>
                             @enderror
                         </div>
+                        {{-- Photo --}}
+                        <div>
+                            <label for="photo" class="block mb-2 text-sm font-medium text-gray-900">Upload file</label>
+                            <input type="file" name="photo" id="photo" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50  focus:outline-none" aria-describedby="file_input_help" id="file_input" >
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">Format yang diterima : JPEG, PNG, JPG Maks, 2 Mb</p>
+                        </div>
                         {{-- Pass --}}
                         <div>
                             <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
