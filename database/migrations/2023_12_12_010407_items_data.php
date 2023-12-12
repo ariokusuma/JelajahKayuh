@@ -16,9 +16,9 @@ return new class extends Migration
             $table->id();
             $table->string('item_name');
             $table->string('category');
+            $table->string('desc')->unique();
             $table->integer('price');
             $table->integer('stock');
-            $table->string('desc')->unique();
             $table->string('photo')->nullable();
             $table->timestamps();
         });
