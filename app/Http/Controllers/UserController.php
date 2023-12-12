@@ -13,8 +13,7 @@ class UserController extends Controller
 {
 
     // Routing Controllers
-    public function register()
-    {
+    public function register() {
         return view('auth.register');
     }
 
@@ -25,8 +24,11 @@ class UserController extends Controller
 
     // ===== Actions Controllers =====
 
-    public function register_action(Request $request)
-    {
+        /**
+     * Action - Register
+     */
+
+    public function register_action(Request $request) {
         // dd($request->all());
         $request->validate([
             'name' => 'required',
@@ -83,7 +85,9 @@ class UserController extends Controller
         return redirect()->route('login')->with('success', 'Registrasi Berhasil!');
     }
 
-
+    /**
+     * Action - Login
+     */
 
     public function login_action(Request $request) {
         $request->validate([
@@ -110,67 +114,17 @@ class UserController extends Controller
         ])->onlyInput('email');
     }
 
-    public function logout(Request $request)
-    {
+    /**
+     * Logout
+     */
+    public function logout(Request $request) {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('login');
     }
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
+    
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
-    {
-        //
-    }
 }

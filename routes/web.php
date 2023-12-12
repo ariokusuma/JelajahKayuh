@@ -36,3 +36,10 @@ Route::GET('register', [UserController::class, 'register'])->name('register');
 Route::POST('register', [UserController::class, 'register_action'])->name('register.action');
 
 Route::GET('logout', [UserController::class, 'logout'])->name('logout');
+
+
+// Dashboard
+
+Route:: GET('dashboard', function() {
+    return view('admin.dashboard');
+});
