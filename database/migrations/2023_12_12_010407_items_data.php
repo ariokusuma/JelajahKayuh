@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::dropIfExists('items_data');
-        Schema::create('items_data', function (Blueprint $table) {
+        Schema::dropIfExists('items');
+        Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->string('item_name');
             $table->string('category');
             $table->string('desc')->unique();
             $table->integer('price');
-            $table->integer('stock');
             $table->string('photo')->nullable();
             $table->timestamps();
         });
