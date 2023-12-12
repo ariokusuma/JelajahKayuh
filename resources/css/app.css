@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .btn-aktif {
+        @apply flex items-center p-2 text-base font-medium text-gray-900 rounded-lg bg-primary hover:bg-primary2;
+    }
+    .btn-nonaktif {
+        @apply flex items-center p-2 text-base font-medium text-gray-900 rounded-lg  hover:bg-gray-200 ;
+    }
+}

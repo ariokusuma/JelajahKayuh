@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class items_data extends Model
+class items extends Model
 {
     use HasFactory;
-    protected $table = 'items_data';
+    protected $table = 'items';
     protected $primaryKey = 'id';
     protected $fillable = [
         'item_name',
@@ -16,4 +16,8 @@ class items_data extends Model
         'desc',
         'photo',
     ];
+
+    public function orders() {
+        return $this->hasMany(orders::class, 'item_id', 'id');
+    }
 }
