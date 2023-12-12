@@ -102,7 +102,7 @@ class UserController extends Controller
 
             if ($role == 0) {
                 // Admin User
-                return redirect()->intended('/');
+                return redirect()->intended('dashboard');
             } else {
                 // Normal User
                 return redirect()->intended('/');
@@ -124,7 +124,7 @@ class UserController extends Controller
         return redirect('login');
     }
 
-    
+
 
 
 }

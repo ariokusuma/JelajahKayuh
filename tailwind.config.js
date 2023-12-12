@@ -12,7 +12,9 @@ export default {
                 primary: "#4774E7",
                 primary2: "#2E5DD5",
                 white: "#F6F6F6",
-                secondary: "#f4b681"
+                secondary: "#f4b681",
+                red: "#D23131",
+                red2: "#B82828",
             }
         },
     },

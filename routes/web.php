@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -40,6 +41,10 @@ Route::GET('logout', [UserController::class, 'logout'])->name('logout');
 
 // Dashboard
 
-Route:: GET('dashboard', function() {
-    return view('admin.dashboard');
-});
+// Route:: GET('dashboard', function() {
+//     return view('admin.dashboard');
+// });
+Route::GET('dashboard', [DashboardController::class, 'sumData']);
+Route::GET('dashboard-user', [DashboardController::class, 'getAllUserData']);
+Route::GET('dashboard-items', [DashboardController::class, 'getAllItemsData']);
+Route::GET('dashboard-orders', [DashboardController::class, 'getAllOrdersData']);

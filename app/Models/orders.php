@@ -20,10 +20,10 @@ class orders extends Model
         'comments',
     ];
 
-    public function item() {
-        return $this->belongsTo(User::class);
-    }
     public function user() {
-        return $this->belongsTo(items::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+    public function item() {
+        return $this->belongsTo(items::class, 'item_id', 'id');
     }
 }
