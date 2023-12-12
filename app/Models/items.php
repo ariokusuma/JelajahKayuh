@@ -18,6 +18,6 @@ class items extends Model
     ];
 
     public function orders() {
-        return $this->hasMany(orders::class, "item_id");
+        return $this->hasMany(orders::class, 'item_id', 'id');
     }
 }
