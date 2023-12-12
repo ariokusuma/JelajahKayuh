@@ -17,6 +17,16 @@ use App\Http\Controllers\UserController;
 Route::get('/', function () {
     return view('landingpage');
 });
+Route::get('/pembayaran', function () {
+    return view('pembayaran');
+});
+Route::get('/pemesanan', function () {
+    return view('pemesanan');
+});
+Route::get('/profiluser', function () {
+    return view('profiluser');
+});
+
 
 // Route::get('/login', function () {
 //     return view('auth.login');
