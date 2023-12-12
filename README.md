@@ -2,7 +2,7 @@
 # JelajahKayuh
 JelajahKayuh merupakan platform daring yang menghadirkan layanan peminjaman sepeda kepada pengguna. Website ini bertujuan untuk memudahkan pengguna dalam menyewa sepeda sesuai dengan kebutuhan mereka.
 
-# Fitur User
+# Fitur
 1. Login Page
 2. Register Page
 3. Landing Page
