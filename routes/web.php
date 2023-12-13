@@ -62,8 +62,14 @@ Route::GET('dashboard-items', [DashboardController::class, 'getAllItemsData']);
 Route::GET('dashboard-orders', [DashboardController::class, 'getAllOrdersData']);
 
 
+
 // Items
 Route::GET('/', [ItemsController::class, 'getAllItemsData']);
 Route::GET('/profiluser', [ItemsController::class, 'getAllOrdersData']);
 Route::get('/pemesanan/{id}', [ItemsController::class, 'getdetailpemesanan']);
+
+
+// Dashboard
+Route::GET('add/items', [DashboardController::class, 'items'])->name('add_data');
+Route::POST('add/items', [DashboardController::class, 'add_items'])->name('add_data.action');
 

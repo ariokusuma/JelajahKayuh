@@ -77,7 +77,7 @@
             <div class="border-2 border-dashed rounded-lg border-gray-300  h-32 md:h-64">
                 {{-- Total Peminjam --}}
                 <div class="w-auto ">
-                    <a href="{{ url('dashboard-pengguna') }}" class="  flex flex-col items-center px-[22px] bg-primary border  h-32 md:h-64 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-primary2">
+                    <a href="{{ url('dashboard-orders') }}" class="  flex flex-col items-center px-[22px] bg-primary border  h-32 md:h-64 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-primary2">
 
                         <div class="">
                             {{-- Icons --}}
