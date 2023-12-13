@@ -3,6 +3,8 @@
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ItemsController;
+use App\Http\Controllers\OrdersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +17,19 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('landingpage');
+// Route::get('/', function () {
+//     return view('landingpage');
+// });
+Route::get('/pembayaran', function () {
+    return view('pembayaran');
 });
+Route::get('/pemesanan', function () {
+    return view('pemesanan');
+});
+Route::get('/profiluser', function () {
+    return view('profiluser');
+});
+
 
 // Route::get('/login', function () {
 //     return view('auth.login');
@@ -49,6 +61,15 @@ Route::GET('dashboard-user', [DashboardController::class, 'getAllUserData']);
 Route::GET('dashboard-items', [DashboardController::class, 'getAllItemsData']);
 Route::GET('dashboard-orders', [DashboardController::class, 'getAllOrdersData']);
 
+
+
+// Items
+Route::GET('/', [ItemsController::class, 'getAllItemsData']);
+Route::GET('/profiluser', [ItemsController::class, 'getAllOrdersData']);
+Route::get('/pemesanan/{id}', [ItemsController::class, 'getdetailpemesanan']);
+
+
 // Dashboard
 Route::GET('add/items', [DashboardController::class, 'items'])->name('add_data');
 Route::POST('add/items', [DashboardController::class, 'add_items'])->name('add_data.action');
+

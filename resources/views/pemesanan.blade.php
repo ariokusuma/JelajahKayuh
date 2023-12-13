@@ -13,7 +13,7 @@
     <form class="max-w-lg mx-auto">
         <div class="mb-5">
             <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sepeda</label>
-            <p class="text-md font-regular text-gray-900 dark:text-white">Sepeda Gunung</p>
+            <p class="text-md font-regular text-gray-900 dark:text-white">{{ $pemesanan->item_name }}</p>
           </div>
 
         <div class="mb-5">
