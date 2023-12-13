@@ -48,3 +48,7 @@ Route::GET('dashboard', [DashboardController::class, 'sumData']);
 Route::GET('dashboard-user', [DashboardController::class, 'getAllUserData']);
 Route::GET('dashboard-items', [DashboardController::class, 'getAllItemsData']);
 Route::GET('dashboard-orders', [DashboardController::class, 'getAllOrdersData']);
+
+// Dashboard
+Route::GET('add/items', [DashboardController::class, 'items'])->name('add_data');
+Route::POST('add/items', [DashboardController::class, 'add_items'])->name('add_data.action');
