@@ -3,6 +3,8 @@
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ItemsController;
+use App\Http\Controllers\OrdersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +17,9 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('landingpage');
-});
+// Route::get('/', function () {
+//     return view('landingpage');
+// });
 Route::get('/pembayaran', function () {
     return view('pembayaran');
 });
@@ -58,3 +60,10 @@ Route::GET('dashboard', [DashboardController::class, 'sumData']);
 Route::GET('dashboard-user', [DashboardController::class, 'getAllUserData']);
 Route::GET('dashboard-items', [DashboardController::class, 'getAllItemsData']);
 Route::GET('dashboard-orders', [DashboardController::class, 'getAllOrdersData']);
+
+
+// Items
+Route::GET('/', [ItemsController::class, 'getAllItemsData']);
+Route::GET('/profiluser', [ItemsController::class, 'getAllOrdersData']);
+Route::get('/pemesanan/{id}', [ItemsController::class, 'getdetailpemesanan']);
+
