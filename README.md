@@ -7,9 +7,11 @@ JelajahKayuh merupakan platform daring yang menghadirkan layanan peminjaman sepe
 2. Register Page
 3. Landing Page
 4. Form Pemesanan
-5. Profile User
-6. Panduan
-7. Tentang Kami
+5. Fitur Payment
+6. Fitur Pengembalian Sewa
+7. Profile User
+8. Panduan
+9. Tentang Kami
 
 
 ## Tim Kami
