@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
                 'nohp' => '0812367412',
                 'email' => 'goku@mail.com',
                 'photo' => 'sepeda lipat kuat',
-                'password' => '21',
+                'password' => bcrypt('21'),
             ],
             [
                 'role' => '1',
@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
                 'nohp' => '0812367412',
                 'email' => 'budi@mail.com',
                 'photo' => 'sepeda lipat kuat',
-                'password' => '21',
+                'password' => bcrypt('21'),
             ],
             ]);
     }
