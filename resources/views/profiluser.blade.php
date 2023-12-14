@@ -100,8 +100,32 @@
                         <img class="w-24 h-24" src="{{asset('bukti_transfer/' . $data->payment_evidence )}}" alt="evidence">
                     </td>
                     <td class="px-6 py-4">
-                        <span class="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">{{ $data->status }}</span>
+                        <span id="statusSpan" class="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">{{ $data->status }}</span>
                     </td>
+
+                    <script>    
+                        // Mendapatkan nilai status dari elemen HTML
+                        var status = document.getElementById("statusSpan").innerText;
+                    
+                        // Fungsi untuk menerjemahkan status angka menjadi teks
+                        function translateStatus(status) {
+                            switch (status) {
+                                case "1":
+                                    return "Waiting for Payment";
+                                case "2":
+                                    return "Done";
+                                case "3":
+                                    return "Rejected";
+                                // Tambahkan kasus lain jika diperlukan
+                                default:
+                                    return "Unknown Status";
+                            }
+                        }
+                    
+                        // Mengganti teks status dengan teks terjemahan
+                        document.getElementById("statusSpan").innerText = translateStatus(status);
+                    </script>
+                    
                     <!-- Modal toggle -->
 
                     @if($data->status == 1)
@@ -147,7 +171,7 @@
                                     <label for="bukti_transfer">Bukti Transfer:</label>
                                     <input type="file" name="bukti_transfer" >
 
-                                    <button type="submit">Submit</button>
+                                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
                                 </form>
                             </div>
 
@@ -167,10 +191,6 @@
 
 </section>
 {{-- Form --}}
-
-
-
-
 
 
 

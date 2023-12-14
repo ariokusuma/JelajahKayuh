@@ -92,3 +92,13 @@ Route::GET('add/order', [DashboardController::class, 'order'])->name('add_order'
 Route::POST('add/order', [DashboardController::class, 'add_order'])->name('add_order_action');
 
 
+Route::GET('/myprofile', [OrdersController::class, 'getAllOrdersData']);
+Route::get('/pemesanan/{id}', [OrdersController::class, 'getdetailpemesanan']);
+Route::post('/pemesanan/{id}', [OrdersController::class, 'postdetailpemesanan'])->name('pesan');
+Route::post('/bukti/{id}', [OrdersController::class, 'bukti'])->name('bukti');
+// Dashboard
+
+Route::GET('add/items', [ItemsController::class, 'items'])->name('add_data');
+Route::POST('add/items', [ItemsController::class, 'add_items'])->name('add_data.action');
+
+

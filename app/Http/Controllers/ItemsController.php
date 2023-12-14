@@ -21,46 +21,37 @@ class ItemsController extends Controller
             "AllItemsData" => items::all(),
         ]);
     }
-    public function getdetailpemesanan($id){
 
-        return view('pemesanan', [
-            "pemesanan" => items::find($id),
+    public function add_items(Request $request) {
+        // dd($request->all());
+        $request->validate([
+            'item_name' => 'required',
+            'category' => 'required',
+            'desc' => 'required',
+            'price' => 'required',
+        ],
+    );
+
+        $user = new items([
+            'item_name' => $request->item_name,
+            'category' => $request->category,
+            'desc' => $request->desc,
+            'price' => $request->price,
 
         ]);
-    }
-    public function postdetailpemesanan($id , Request $request){
-        $order = new orders();
-        $order->item_id = $id;
-        $order->user_id = Auth::user()->id;
-        $order->payment_evidence = null;
-        $order->status = 1;
-        $order->comments = 'No Telp Yang Bisa Di Hubugni' . $request->no_telp;
-        $order->start_date = $request->date;
 
-        $carbonDate = Carbon::parse($request->date);
-
-        if ($request->masa == '1'){
-            $order->end_date = $carbonDate->addDays(1);
-        }
-        if ($request->masa == '1/2'){
-            $order->end_date = $carbonDate;
-        }
-        if ($request->masa == '2'){
-            $order->end_date = $carbonDate->addDays(2);
-        }
-        if ($request->masa == '3'){
-            $order->end_date = $carbonDate->addDays(3);
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('photos', 'public'); // Save the photo to the 'public/photos' directory
+            $user->photo = $photoPath;
         }
 
-        $order->save();
-        return redirect('/');
+        $user->save();
 
-
-
+        return redirect()->route('dashboard-items')->with('success', 'Tambah Data Berhasil!');
     }
 
-    public function getAllOrdersData()
-    {
+
+    public function getAllOrdersData() {
         $AllOrdersData = orders::with('item', 'user')->where('user_id',Auth::id())->get();
 
 
@@ -98,31 +89,23 @@ class ItemsController extends Controller
                 // $order->sisaWaktu = $sisaWaktu;
             }
         }
-        return view('profiluser', [
+        return view(
+            'profiluser', [
             'AllOrdersData' => $AllOrdersData,
             'noTransactionData' => $noTransactionData,
-        ]);
+            ]);
+    }
+
+
+    public function items() {
+        return view('admin.cud.add_items');
 
     }
 
 
-    public function bukti($id , Request $request){
-        // Menyimpan file ke dalam direktori yang diinginkan (misalnya, storage/app/public/bukti_transfer)
-        $file = $request->file('bukti_transfer');
-
-        $fileName = 'bukti_transfer_' . time() . '.' . $file->getClientOriginalExtension();
-        // Pindahkan file ke folder public
-        $file->move(public_path('bukti_transfer'), $fileName);
-
-        $data = orders::find($id);
-        $data->payment_evidence = $fileName;
-        $data->status = 2;
-        $data->update();
 
 
 
-        return redirect()->back();
-    }
 
 
 }
