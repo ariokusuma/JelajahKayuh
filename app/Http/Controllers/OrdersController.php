@@ -36,35 +36,17 @@ class OrdersController extends Controller
             'noTelepon' => 'required',
             'emailPemesan' => 'required',
             'buktiTf' => 'required',
-            'status' => 'required',
+            'status' => 'required', 
             'tanggal' => 'required',
             'travel_agent_id' => 'required',
 
         ]);
       
-        pesanan::create($request->all());
+        orders::create($request->all());
        
         return redirect('/riwayatpesanan')->with('success','Pemesanan berhasil dipesan.');
     }
-    public function store(Request $request)
-    {
-        $request->validate([
-            'wisata_id' => 'required',
-            'totalHarga' => 'required',
-            'namaPemesan' => 'required',
-            'noTelepon' => 'required',
-            'emailPemesan' => 'required',
-            'buktiTf' => 'required',
-            'status' => 'required',
-            'tanggal' => 'required',
-            'travel_agent_id' => 'required',
-
-        ]);
-
-        orders::create($request->all());
-        return redirect('/profiluser');
-
-    }
+   
 
     /**
      * Display the specified resource.

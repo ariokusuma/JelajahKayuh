@@ -91,8 +91,8 @@ class DashboardController extends Controller
             $sisaWaktu = $hari . ' Hari ' . $jam . ' Jam ' . $menit . ' Menit until 5 days since start';
 
 
-            $order->waktu = $waktu;
-            $order->sisaWaktu = $sisaWaktu;
+            // $order->waktu = $waktu;
+            // $order->sisaWaktu = $sisaWaktu;
 
 
         }
