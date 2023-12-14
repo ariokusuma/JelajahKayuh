@@ -21,4 +21,10 @@ class items extends Model
     public function orders() {
         return $this->hasMany(orders::class, 'item_id', 'id');
     }
+
+
+    public function categories() {
+        return $this->belongsTo(categories::class, 'category', 'id');
+    }
+
 }

@@ -1,3 +1,4 @@
+
 <?php
 
 namespace App\Http\Controllers;
@@ -79,7 +80,7 @@ class OrdersController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    
+
      public function postdetailpemesanan($id , Request $request){
         $order = new orders();
         $order->item_id = $id;
@@ -124,7 +125,7 @@ class OrdersController extends Controller
 
         return redirect()->back();
     }
-   
+
 
     /**
      * Display the specified resource.

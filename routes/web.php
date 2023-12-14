@@ -59,7 +59,8 @@ Route::GET('logout', [UserController::class, 'logout'])->name('logout');
 Route::GET('dashboard', [DashboardController::class, 'sumData']);
 Route::GET('dashboard-user', [DashboardController::class, 'getAllUserData'])->name('dashboardUsers');
 Route::GET('dashboard-items', [DashboardController::class, 'getAllItemsData'])->name('dashboardItems');
-Route::GET('dashboard-orders', [DashboardController::class, 'getAllOrdersData']);
+Route::GET('dashboard-category', [DashboardController::class, 'getAllCategoryData'])->name('dashboardCategory');
+Route::GET('dashboard-orders', [DashboardController::class, 'getAllOrdersData'])->name('dashboardOrders');
 
 
 
@@ -79,8 +80,8 @@ Route::post('/bukti/{id}', [OrdersController::class, 'bukti'])->name('bukti');
 // CRUD Users
 Route::GET('add/user', [DashboardController::class, 'add_user'])->name('add_user');
 Route::POST('add/user', [DashboardController::class, 'add_user_action'])->name('add_user_action');
+Route::put('update/user/{id}', [DashboardController::class, 'edit_user'])->name('update_user');
 Route::get('/delete/{id}', [DashboardController::class, 'delete_user'])->name('delete_user');
-// Route::GET('/delete-user/{id}', [DashboardController::class, 'deleteUser']);
 
 
 // CRUD Item
@@ -92,6 +93,24 @@ Route::GET('/deleteitem/{id}', [DashboardController::class, 'delete_item'])->nam
 // CRUD Orders
 Route::GET('add/order', [DashboardController::class, 'order'])->name('add_order');
 Route::POST('add/order', [DashboardController::class, 'add_order'])->name('add_order_action');
+
+// CRUD Categories
+// Route::GET('add/category', [DashboardController::class, 'items'])->name('add_category');
+Route::POST('add/category', [DashboardController::class, 'add_category'])->name('add_category');
+Route::put('update/category/{id}', [DashboardController::class, 'edit_category'])->name('update_category');
+Route::GET('/delete/category/{id}', [DashboardController::class, 'delete_category'])->name('delete_category');
+
+
+
+
+Route::GET('/myprofile', [OrdersController::class, 'getAllOrdersData']);
+Route::get('/pemesanan/{id}', [OrdersController::class, 'getdetailpemesanan']);
+Route::post('/pemesanan/{id}', [OrdersController::class, 'postdetailpemesanan'])->name('pesan');
+Route::post('/bukti/{id}', [OrdersController::class, 'bukti'])->name('bukti');
+// Dashboard
+
+Route::GET('add/items', [ItemsController::class, 'items'])->name('add_data');
+Route::POST('add/items', [ItemsController::class, 'add_items'])->name('add_data.action');
 
 
 

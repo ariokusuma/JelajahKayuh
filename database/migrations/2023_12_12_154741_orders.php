@@ -16,15 +16,18 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('item_id');
             $table->unsignedBigInteger('user_id');
-            $table->string('payment_evidence')->nullable();
+            $table->unsignedBigInteger('category');
             $table->integer('status');
+            $table->string('payment_evidence')->nullable();
             $table->dateTime('start_date');
             $table->dateTime('end_date');
+            $table->integer('price');
             $table->string('comments');
             $table->timestamps();
 
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('category')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

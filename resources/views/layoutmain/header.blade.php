@@ -26,6 +26,8 @@
                                 class="block text-sm font-semibold text-gray-900 ">{{ Auth::user()->name }}</span>
                             <span
                                 class="block text-sm text-gray-900 truncate ">{{ Auth::user()->email }}</span>
+                            <span
+                                class="block text-sm text-gray-900 truncate ">{{ Auth::user()->role  == 0 ? 'Admin' : 'Personal' }}</span>
                         </div>
                         <ul class="py-1 text-gray-700 dark:text-gray-300" aria-labelledby="dropdown">
                             <li>
