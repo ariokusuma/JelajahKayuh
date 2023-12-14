@@ -85,7 +85,7 @@
                                                 </div>
                                     </th>
                                     <td class="px-4 py-3">{{ $data->item_name }}</td>
-                                    <td class="px-4 py-3">{{ $data->category }}</td>
+                                    <td class="px-4 py-3">{{ $data->categories->category_name }}</td>
                                     <td class="px-4 py-3">{{ $data->desc }}</td>
                                     <td class="px-4 py-3">Rp{{ $data->price}}</td>
 
@@ -127,7 +127,7 @@
                                                             <div class="pb-8">
                                                                 {{-- Nama Barang --}}
                                                                 <div>
-                                                                    <label for="item_name" class="block mb-2 text-base text-start font-medium text-gray-900 ">Nama Program</label>
+                                                                    <label for="item_name" class="block mb-2 text-base text-start font-medium text-gray-900 ">Nama Barang</label>
                                                                     <input value="{{ $data->item_name }}" required type="text" name="item_name" id="item_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-turqoise focus:border-turqoise block w-full p-2.5 " placeholder="SERTIFIKASI">
                                                                 </div>
 
@@ -136,9 +136,9 @@
                                                                     <label for="category" class="block mb-2 mt-4 text-base text-start font-medium text-gray-900 ">Kategori</label>
                                                                     <select name="category" id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                                                         @foreach($categories as $category)
-                                                                            <option {{ $category == $data->category ? 'selected' : '' }} value="{{ $category }}">{{ $category }}</option>
+                                                                            <option {{ $category['id'] == $data->category ? 'selected' : '' }} value="{{ $category['id'] }}">{{ $category['name'] }}</option>
                                                                         @endforeach
-                                                                        <option selected value="{{ $data->category }}">{{ $data->category }}</option>
+                                                                        <option selected value="{{ $data->category }}">{{  $category['name'] }}</option>
                                                                     </select>
                                                                 </div>
                                                                 {{-- desc --}}

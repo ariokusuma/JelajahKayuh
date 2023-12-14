@@ -86,7 +86,7 @@
                     <span class="{{ Request::is('dashboard-user') ? ' ml-3 text-white' : ' ml-3 text-black' }}">Daftar Pengguna</span>
                 </a>
             </li>
-            {{-- Daftar Pengguna --}}
+            {{-- Daftar Barang --}}
             <li>
                 <a href="{{  url('dashboard-items') }}"
                     class="{{ Request::is('dashboard-items') ? 'btn-aktif' : 'btn-nonaktif' }}">
@@ -97,8 +97,19 @@
                     <span class="{{ Request::is('dashboard-items') ? ' ml-3 text-white' : ' ml-3 text-black' }}">Daftar Barang</span>
                 </a>
             </li>
+            {{-- Daftar Kategori Barang --}}
+            <li>
+                <a href="{{  url('dashboard-category') }}"
+                    class="{{ Request::is('dashboard-category') ? 'btn-aktif' : 'btn-nonaktif' }}">
+                    <svg aria-hidden="true"
+                        class="w-6 h-6 {{ Request::is('dashboard-category') ? 'text-white transition duration-75' : ' text-gray-500 transition duration-75' }}"
+                        fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path> <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                    </svg>
+                    <span class="{{ Request::is('dashboard-category') ? ' ml-3 text-white' : ' ml-3 text-black' }}">Daftar Kategori Barang</span>
+                </a>
+            </li>
 
-            {{-- Daftar Pengguna --}}
+            {{-- Daftar Peminjam --}}
             <li>
                 <a href="{{  url('dashboard-orders') }}"
                     class="{{ Request::is('dashboard-orders') ? 'btn-aktif' : 'btn-nonaktif' }}">

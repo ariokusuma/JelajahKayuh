@@ -59,7 +59,8 @@ Route::GET('logout', [UserController::class, 'logout'])->name('logout');
 Route::GET('dashboard', [DashboardController::class, 'sumData']);
 Route::GET('dashboard-user', [DashboardController::class, 'getAllUserData'])->name('dashboardUsers');
 Route::GET('dashboard-items', [DashboardController::class, 'getAllItemsData'])->name('dashboardItems');
-Route::GET('dashboard-orders', [DashboardController::class, 'getAllOrdersData']);
+Route::GET('dashboard-category', [DashboardController::class, 'getAllCategoryData'])->name('dashboardCategory');
+Route::GET('dashboard-orders', [DashboardController::class, 'getAllOrdersData'])->name('dashboardOrders');
 
 
 
@@ -90,6 +91,14 @@ Route::GET('/deleteitem/{id}', [DashboardController::class, 'delete_item'])->nam
 // CRUD Orders
 Route::GET('add/order', [DashboardController::class, 'order'])->name('add_order');
 Route::POST('add/order', [DashboardController::class, 'add_order'])->name('add_order_action');
+
+// CRUD Categories
+// Route::GET('add/category', [DashboardController::class, 'items'])->name('add_category');
+Route::POST('add/category', [DashboardController::class, 'add_category'])->name('add_category');
+Route::put('update/category/{id}', [DashboardController::class, 'edit_category'])->name('update_category');
+Route::GET('/delete/category/{id}', [DashboardController::class, 'delete_category'])->name('delete_category');
+
+
 
 
 Route::GET('/myprofile', [OrdersController::class, 'getAllOrdersData']);

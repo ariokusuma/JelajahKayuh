@@ -13,6 +13,7 @@ class orders extends Model
     protected $fillable = [
         'item_id',
         'user_id',
+        'category',
         'payment_evidence',
         'status',
         'start_date',
@@ -26,4 +27,8 @@ class orders extends Model
     public function item() {
         return $this->belongsTo(items::class, 'item_id', 'id');
     }
+    public function categories() {
+        return $this->belongsTo(categories::class, 'category', 'id');
+    }
+
 }

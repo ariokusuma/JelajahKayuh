@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\categories;
 use Carbon\Carbon;
 
 use App\Models\User;
@@ -55,51 +57,8 @@ class DashboardController extends Controller
 
 
 
-    public function getAllItemsData(): View
-    {
-        $AllItemsData = DB::table('items')->get();
-
-        $categories = [
-            'Sepeda Gunung (Mountain Bike)',
-            'Sepeda Balap (Race Bike)',
-            'Sepeda Lipat (Folding Bike)' ,
-            'Sepeda Listrik (E-Bike)',
-        ];
-
-        return view('admin.dashboard_items', ['AllItemsData' => $AllItemsData, 'categories' => $categories]);
-    }
 
 
-    public function getAllOrdersData(): View
-    {
-        $AllOrdersData = orders::with('item', 'user')->get();
-
-        foreach ($AllOrdersData as $order) {
-
-            $startDate = Carbon::parse($order->start_date);
-            // $endDate = Carbon::parse($order->end_date);
-
-            $sisaHari = max(0, 5 - $startDate->diffInDays());
-
-
-            $waktu = $sisaHari . ' Hari';
-
-            // Compare with the current date
-            $now = Carbon::now();
-            $hari = $now->diffInDays($startDate);
-            $jam = $now->diffInHours($startDate) % 24; // Limit hours to 24
-            $menit = $now->diffInMinutes($startDate) % 60;
-
-            $sisaWaktu = $hari . ' Hari ' . $jam . ' Jam ' . $menit . ' Menit until 5 days since start';
-
-
-
-
-        }
-        // dd($dataa->all());
-
-        return view('admin.dashboard_orders', ['AllOrdersData' => $AllOrdersData]);
-    }
 
 
 
@@ -107,8 +66,7 @@ class DashboardController extends Controller
 
      // CRUD User
 
-    public function getAllUserData(): View
-    {
+    public function getAllUserData(): View {
         $AllUserData = DB::table('users')->get();
 
         $roleType = [
@@ -223,6 +181,25 @@ class DashboardController extends Controller
         return view('admin.cud.add_items');
     }
 
+    public function getAllItemsData(): View
+    {
+        $AllItemsData = items::with('categories')->get();
+
+        $pullCategories = categories::pluck('category_name','id');
+        // $order->finalPrice = $finalPrice;
+
+        foreach ($pullCategories as $categoryID => $categoryName) {
+            $categories[] = [
+                'id' => $categoryID,
+                'name' => $categoryName,
+            ];
+
+        }
+        // dd($AllItemsData);
+
+        return view('admin.dashboard_items', ['AllItemsData' => $AllItemsData, 'categories' => $categories]);
+    }
+
 
     public function add_items(Request $request) {
         // dd($request->all());
@@ -294,6 +271,41 @@ class DashboardController extends Controller
 
 // ================================== Orders Controllers ==================================
 
+
+    public function getAllOrdersData()
+    {
+        $AllOrdersData = orders::with('item', 'user', 'categories')->get();
+        // dd($AllOrdersData->toArray());
+
+        foreach ($AllOrdersData as $order) {
+            // Parse Date from db
+            $startDate = Carbon::parse($order->start_date);
+            $endDate = Carbon::parse($order->end_date);
+
+            // Count Rent Durations
+            $rentDuration =  $endDate->diffAsCarbonInterval($startDate)->
+                                        settings(['locale' => 'id'])->
+                                        forHumans(['short' => false]);
+            $order->rentDuration = $rentDuration;
+
+            // Count Rent Time Left
+            $remainingTime = now()->diffAsCarbonInterval($endDate)->
+                                    settings(['locale' => 'id'])->
+                                    forHumans(['short' => false]);
+            $order->remainingTime = $remainingTime;
+
+            // Calculate Final Price
+            $days = $endDate->diffInDays($startDate);
+            $finalPrice =  number_format($days * $order->item->price, 0, ',', '.');
+            $order->finalPrice = $finalPrice;
+            // dd($days);
+
+        }
+
+        return view('admin.dashboard_orders', ['AllUserData' => $AllOrdersData]);
+    }
+
+
 public function order() {
     return view('admin.cud.add_orders');
 }
@@ -328,7 +340,60 @@ public function add_order(Request $request) {
     return redirect()->route('dashboardItems')->with('success', 'Tambah Data Berhasil!');
 }
 
+// ================================== Category Controllers ==================================
+
+public function getAllCategoryData(): View
+{
+    $AllCategoryData = categories::all();
+
+    // dd($AllCategoryData->toArray());
+
+    return view('admin.dashboard_category', ['AllCategoryData' => $AllCategoryData]);
+}
 
 
+// public function add_category() {
+//     return view('admin.cud.add_users');
+// }
+
+public function add_category( Request $request) {
+    // dd($request->all());
+    $request->validate([
+        'category_name' => 'required',
+    ],
+);
+
+    $category = new categories([
+        'category_name' => $request->category_name,
+    ]);
+
+    $category->save();
+
+    return redirect()->route('dashboardCategory')->with('success', 'Tambah Data Berhasil!');
+}
+
+
+public function edit_category(Request $request, $id) {
+    // dd($request->all());
+
+    $cari = categories::find($id);
+
+    $cari->update([
+        'category_name' => $request->category_name,
+
+    ]);
+
+    return redirect('/dashboard-category');
+}
+
+
+public function delete_category($id) {
+    // dd('Delete user method reached. User ID:', $id);
+    $User = categories::findOrFail($id);
+    $User->delete();
+
+
+    return redirect('/dashboard-category');
+}
 
 }

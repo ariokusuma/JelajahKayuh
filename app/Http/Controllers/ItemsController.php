@@ -47,7 +47,7 @@ class ItemsController extends Controller
 
         $user->save();
 
-        return redirect()->route('dashboard-items')->with('success', 'Tambah Data Berhasil!');
+        return redirect()->route('dashboardItems')->with('success', 'Tambah Data Berhasil!');
     }
 
 
