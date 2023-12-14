@@ -31,7 +31,7 @@
     @foreach ($AllItemsData as $data)
         <div class="max-w-sm bg-slate-50 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             @if ($data->photo)
-                <img class="rounded-t-lg object-cover w-full h-52" src="{{ asset('storage/'.$data->photo) }}" alt="" />
+                <img class="rounded-t-lg object-cover w-full h-52" src="{{ asset('img/'.$data->photo) }}" alt="" />
             @else
                 <img class="rounded-t-lg" src="{{ asset('storage/default_profile.png') }}" alt="" />
             @endif

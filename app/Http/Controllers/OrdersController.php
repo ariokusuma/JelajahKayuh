@@ -85,9 +85,6 @@ class OrdersController extends Controller
         if ($request->masa == '1'){
             $order->end_date = $carbonDate->addDays(1);
         }
-        if ($request->masa == '1/2'){
-            $order->end_date = $carbonDate;
-        }
         if ($request->masa == '2'){
             $order->end_date = $carbonDate->addDays(2);
         }
