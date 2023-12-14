@@ -30,5 +30,5 @@ Kami Kelompok 15 dari Kelas Sertifikasi LSP Web Development yang terdiri atas:
 9. Tentang Kami
 
 # Skema Database
-<p align="center"><a href="#" target="_blank"><img src="https://github.com/ariokusuma/JelajahKayuh/blob/stagingv2/jelajahkayuh.png" width="400" alt="Skema JelajahKayuh"></a></p>
+<p align="center"><a href="#" target="_blank"><img src="https://github.com/ariokusuma/JelajahKayuh/blob/stagingv2/skema-db.png" width="600" alt="Skema JelajahKayuh"></a></p>
 <!-- [JelajahKayuh](skema-db.pdf) -->
