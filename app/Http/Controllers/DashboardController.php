@@ -246,6 +246,7 @@ class DashboardController extends Controller
 
     }
 
+
     public function delete_item($id) {
         // dd('Delete user method reached. User ID:', $id);
         $User = items::findOrFail($id);
