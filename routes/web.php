@@ -57,7 +57,7 @@ Route::GET('logout', [UserController::class, 'logout'])->name('logout');
 //     return view('admin.dashboard');
 // });
 Route::GET('dashboard', [DashboardController::class, 'sumData']);
-Route::GET('dashboard-user', [DashboardController::class, 'getAllUserData']);
+Route::GET('dashboard-user', [DashboardController::class, 'getAllUserData'])->name('dashboardUsers');
 Route::GET('dashboard-items', [DashboardController::class, 'getAllItemsData'])->name('dashboardItems');
 Route::GET('dashboard-orders', [DashboardController::class, 'getAllOrdersData']);
 
@@ -69,10 +69,24 @@ Route::GET('/profiluser', [ItemsController::class, 'getAllOrdersData']);
 Route::get('/pemesanan/{id}', [ItemsController::class, 'getdetailpemesanan']);
 Route::post('/pemesanan/{id}', [ItemsController::class, 'postdetailpemesanan'])->name('pesan');
 Route::post('/bukti/{id}', [ItemsController::class, 'bukti'])->name('bukti');
-// Dashboard
+
+
+
+// ================================== Route Dashboard ==================================
+
+// CRUD Users
+Route::GET('add/user', [DashboardController::class, 'add_user'])->name('add_user');
+Route::POST('add/user', [DashboardController::class, 'add_user_action'])->name('add_user_action');
+
+Route::GET('/delete-user/{id}', [DashboardController::class, 'deleteUser']);
+
+
+// CRUD Item
 Route::GET('add/items', [DashboardController::class, 'items'])->name('add_data');
 Route::POST('add/items', [DashboardController::class, 'add_items'])->name('add_data.action');
 
+// CRUD Orders
+Route::GET('add/order', [DashboardController::class, 'order'])->name('add_order');
+Route::POST('add/order', [DashboardController::class, 'add_order'])->name('add_order_action');
 
-Route::GET('/delete-user/{id}', [DashboardController::class, 'deleteUser']);
 
