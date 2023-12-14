@@ -6,6 +6,11 @@
     <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
         <img src="assets/logo.svg" class="h-8" alt="JelajahKayuh Logo">
     </a>
+        @auth()
+            <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+            <h3 class="font-bold">Welcome {{\Illuminate\Support\Facades\Auth::user()->name}}</h3>
+            </div>
+        @else
     <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
         <a href="/login" type="submit" class="inline-flex justify-center items-center font-medium text-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Login
           <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -20,6 +25,7 @@
           </svg>
       </button>
     </div>
+        @endauth
     <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
       <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
         <li>

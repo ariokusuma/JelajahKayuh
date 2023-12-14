@@ -70,6 +70,9 @@ class DashboardController extends Controller
         $AllOrdersData = orders::with('item', 'user')->get();
 
         foreach ($AllOrdersData as $order) {
+            $waktu = '';
+            $sisaWaktu = '';
+
             $startDate = Carbon::parse($order->start_date);
             // $endDate = Carbon::parse($order->end_date);
 
@@ -100,4 +103,38 @@ class DashboardController extends Controller
 
         return view('admin.dashboard_orders', ['AllOrdersData' => $AllOrdersData]);
     }
+
+
+    public function add_items(Request $request) {
+        // dd($request->all());
+        $request->validate([
+            'item_name' => 'required',
+            'category' => 'required',
+            'desc' => 'required',
+            'price' => 'required',
+        ],
+    );
+
+        $user = new items([
+            'item_name' => $request->item_name,
+            'category' => $request->category,
+            'desc' => $request->desc,
+            'price' => $request->price,
+
+        ]);
+
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('photos', 'public'); // Save the photo to the 'public/photos' directory
+            $user->photo = $photoPath;
+        }
+
+        $user->save();
+
+        return redirect()->route('dashboard-items')->with('success', 'Tambah Data Berhasil!');
+    }
+
+    public function items() {
+        return view('admin.cud.add_items');
+    }
+
 }
