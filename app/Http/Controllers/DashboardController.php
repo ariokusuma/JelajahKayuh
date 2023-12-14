@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class DashboardController extends Controller
 {
@@ -61,7 +62,14 @@ class DashboardController extends Controller
     {
         $AllItemsData = DB::table('items')->get();
 
-        return view('admin.dashboard_items', ['AllItemsData' => $AllItemsData]);
+        $categories = [
+            'Sepeda Gunung (Mountain Bike)',
+            'Sepeda Balap (Road Bike)',
+            'Sepeda Lipat',
+            'Sepeda Listrik',
+        ];
+
+        return view('admin.dashboard_items', ['AllItemsData' => $AllItemsData, 'categories' => $categories]);
     }
 
 
@@ -105,6 +113,185 @@ class DashboardController extends Controller
     }
 
 
-    
+    // ================================== User Controllers ==================================
+
+     // CRUD User
+    public function add_user() {
+        return view('admin.cud.add_users');
+    }
+
+    public function add_user_action(Request $request) {
+        // dd($request->all());
+        $request->validate([
+            'name' => 'required',
+            'nohp' => 'required',
+            'email' => 'required|email|unique:users',
+            'photo' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'password' => [
+                'required',
+                'confirmed',
+                // 'min:8',
+                // 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/',
+                // function ($attribute, $value, $fail) {
+                //     if (strlen($value) < 8) {
+                //         throw ValidationException::withMessages([
+                //             'password' => 'Password harus memiliki setidaknya 8 karakter.',
+                //         ]);
+                //     }
+                //     if (preg_match('/^[a-zA-Z]+$/', $value)) {
+                //         throw ValidationException::withMessages([
+                //             'password' => 'Password tidak boleh berupa huruf semua.',
+                //         ]);
+                //     }
+                //     if (preg_match('/^\d+$/', $value)) {
+                //         throw ValidationException::withMessages([
+                //             'password' => 'Password tidak boleh berupa angka semua.',
+                //         ]);
+                //     }
+                //     if (!preg_match('/[@$!%*?&]/', $value)) {
+                //         throw ValidationException::withMessages([
+                //             'password' => 'Password harus memiliki setidaknya satu karakter khusus.',
+                //         ]);
+                //     }
+                // },
+            ],
+        ],
+    );
+
+        $user = new User([
+            'role' => 1,
+            'name' => $request->name,
+            'nohp' => $request->nohp,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+
+        ]);
+
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('photos', 'public'); // Save the photo to the 'public/photos' directory
+            $user->photo = $photoPath;
+        }
+
+        $user->save();
+
+        return redirect()->route('dashboardUsers')->with('success', 'Tambah Data Berhasil!');
+    }
+
+
+    public function delete_user($id) {
+        // dd('Delete user method reached. User ID:', $id);
+        $User = User::findOrFail($id);
+        $User->delete();
+
+
+        return redirect('/dashboard-user');
+    }
+
+// ================================== Items Controllers ==================================
+    public function items() {
+        return view('admin.cud.add_items');
+    }
+
+
+    public function add_items(Request $request) {
+        // dd($request->all());
+        $request->validate([
+            'item_name' => 'required',
+            'category' => 'required',
+            'desc' => 'required',
+            'photo' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'price' => 'required',
+        ],
+    );
+
+        $user = new items([
+            'item_name' => $request->item_name,
+            'category' => $request->category,
+            'desc' => $request->desc,
+            'price' => $request->price,
+
+        ]);
+
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('photos', 'public'); // simpan foro ke 'public/photos'
+            $user->photo = $photoPath;
+        }
+
+        $user->save();
+
+        return redirect()->route('dashboardItems')->with('success', 'Tambah Data Berhasil!');
+    }
+
+    public function edit_items(Request $request, $id) {
+        // dd($request->all());
+
+        $cari = items::find($id);
+
+        $cari->update([
+            'item_name' => $request->item_name,
+            'category' => $request->category,
+            'desc' => $request->desc,
+            'price' => $request->price,
+        ]);
+
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('photos', 'public'); // simpan foro ke 'public/photos'
+            $cari->photo = $photoPath;
+        }
+
+        return redirect('/dashboard-items');
+    }
+
+    public function editItems(Request $request, $id) {
+
+    }
+
+    public function delete_item($id) {
+        // dd('Delete user method reached. User ID:', $id);
+        $User = items::findOrFail($id);
+        $User->delete();
+
+
+        return redirect('/dashboard-items');
+    }
+
+// ================================== Orders Controllers ==================================
+
+public function order() {
+    return view('admin.cud.add_orders');
+}
+
+
+public function add_order(Request $request) {
+    // dd($request->all());
+    $request->validate([
+        'item_name' => 'required',
+        'category' => 'required',
+        'desc' => 'required',
+        'photo' => 'image|mimes:jpeg,png,jpg|max:2048',
+        'price' => 'required',
+    ],
+);
+
+    $user = new items([
+        'item_name' => $request->item_name,
+        'category' => $request->category,
+        'desc' => $request->desc,
+        'price' => $request->price,
+
+    ]);
+
+    if ($request->hasFile('photo')) {
+        $photoPath = $request->file('photo')->store('photos', 'public'); // Save the photo to the 'public/photos' directory
+        $user->photo = $photoPath;
+    }
+
+    $user->save();
+
+    return redirect()->route('dashboardItems')->with('success', 'Tambah Data Berhasil!');
+}
+
+
+
 
 }
