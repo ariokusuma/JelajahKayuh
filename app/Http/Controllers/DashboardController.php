@@ -62,7 +62,14 @@ class DashboardController extends Controller
     {
         $AllItemsData = DB::table('items')->get();
 
-        return view('admin.dashboard_items', ['AllItemsData' => $AllItemsData]);
+        $categories = [
+            'Sepeda Gunung (Mountain Bike)',
+            'Sepeda Balap (Road Bike)',
+            'Sepeda Lipat',
+            'Sepeda Listrik',
+        ];
+
+        return view('admin.dashboard_items', ['AllItemsData' => $AllItemsData, 'categories' => $categories]);
     }
 
 
@@ -170,9 +177,9 @@ class DashboardController extends Controller
         return redirect()->route('dashboardUsers')->with('success', 'Tambah Data Berhasil!');
     }
 
-    public function deleteUser($id)
-    {
-        dd('Delete user method reached. User ID:', $id);
+
+    public function delete_user($id) {
+        // dd('Delete user method reached. User ID:', $id);
         $User = User::findOrFail($id);
         $User->delete();
 
@@ -206,7 +213,7 @@ class DashboardController extends Controller
         ]);
 
         if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('photos', 'public'); // Save the photo to the 'public/photos' directory
+            $photoPath = $request->file('photo')->store('photos', 'public'); // simpan foro ke 'public/photos'
             $user->photo = $photoPath;
         }
 
@@ -215,10 +222,37 @@ class DashboardController extends Controller
         return redirect()->route('dashboardItems')->with('success', 'Tambah Data Berhasil!');
     }
 
+    public function edit_items(Request $request, $id) {
+        // dd($request->all());
 
+        $cari = items::find($id);
+
+        $cari->update([
+            'item_name' => $request->item_name,
+            'category' => $request->category,
+            'desc' => $request->desc,
+            'price' => $request->price,
+        ]);
+
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('photos', 'public'); // simpan foro ke 'public/photos'
+            $cari->photo = $photoPath;
+        }
+
+        return redirect('/dashboard-items');
+    }
 
     public function editItems(Request $request, $id) {
 
+    }
+
+    public function delete_item($id) {
+        // dd('Delete user method reached. User ID:', $id);
+        $User = items::findOrFail($id);
+        $User->delete();
+
+
+        return redirect('/dashboard-items');
     }
 
 // ================================== Orders Controllers ==================================

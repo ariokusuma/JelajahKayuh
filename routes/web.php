@@ -77,13 +77,15 @@ Route::post('/bukti/{id}', [ItemsController::class, 'bukti'])->name('bukti');
 // CRUD Users
 Route::GET('add/user', [DashboardController::class, 'add_user'])->name('add_user');
 Route::POST('add/user', [DashboardController::class, 'add_user_action'])->name('add_user_action');
-
-Route::GET('/delete-user/{id}', [DashboardController::class, 'deleteUser']);
+Route::get('/delete/{id}', [DashboardController::class, 'delete_user'])->name('delete_user');
+// Route::GET('/delete-user/{id}', [DashboardController::class, 'deleteUser']);
 
 
 // CRUD Item
 Route::GET('add/items', [DashboardController::class, 'items'])->name('add_data');
 Route::POST('add/items', [DashboardController::class, 'add_items'])->name('add_data.action');
+Route::put('update/item/{id}', [DashboardController::class, 'edit_items'])->name('update_item');
+Route::GET('/deleteitem/{id}', [DashboardController::class, 'delete_item'])->name('delete_item');
 
 // CRUD Orders
 Route::GET('add/order', [DashboardController::class, 'order'])->name('add_order');

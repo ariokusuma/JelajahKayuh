@@ -16,6 +16,7 @@
                     <div class="text-xl font-semibold">{{Auth::user()->name}}</div>
                     <div class="text-lg font-normal text-gray-400">{{Auth::user()->email}}</div>
                 </div>
+                <div class="w-64 text-center text-xl font-semibold">{{ Auth::user()->role == 0 ? 'Admin' : 'Personal' }}</div>
             </div>
             <a href="/ubahprofil" class="text-grey-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-auto">Ubah Profil</a>
         </div>
