@@ -64,9 +64,9 @@ class DashboardController extends Controller
 
         $categories = [
             'Sepeda Gunung (Mountain Bike)',
-            'Sepeda Balap (Road Bike)',
-            'Sepeda Lipat',
-            'Sepeda Listrik',
+            'Sepeda Balap (Race Bike)',
+            'Sepeda Lipat (Folding Bike)' ,
+            'Sepeda Listrik (E-Bike)',
         ];
 
         return view('admin.dashboard_items', ['AllItemsData' => $AllItemsData, 'categories' => $categories]);

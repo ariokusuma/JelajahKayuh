@@ -21,7 +21,7 @@ class ItemsController extends Controller
             "AllItemsData" => items::all(),
         ]);
     }
-    
+
     public function add_items(Request $request) {
         // dd($request->all());
         $request->validate([
@@ -51,8 +51,7 @@ class ItemsController extends Controller
     }
 
 
-    public function getAllOrdersData()
-    {
+    public function getAllOrdersData() {
         $AllOrdersData = orders::with('item', 'user')->where('user_id',Auth::id())->get();
 
 
@@ -90,10 +89,12 @@ class ItemsController extends Controller
                 // $order->sisaWaktu = $sisaWaktu;
             }
         }
-        return view('profiluser', [
+        return view(
+            'profiluser', [
             'AllOrdersData' => $AllOrdersData,
             'noTransactionData' => $noTransactionData,
-        ]);
+            ]);
+    }
 
 
     public function items() {
@@ -101,10 +102,10 @@ class ItemsController extends Controller
 
     }
 
-    
 
 
-    
+
+
 
 
 }
