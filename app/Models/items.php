@@ -15,6 +15,7 @@ class items extends Model
         'category',
         'desc',
         'photo',
+        'price',
     ];
 
     public function orders() {
