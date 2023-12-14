@@ -55,60 +55,155 @@
                                     <th scope="col" class="px-4 py-3">No. Hp</th>
                                     <th scope="col" class="px-4 py-3">Barang</th>
                                     <th scope="col" class="px-4 py-3">Kategori</th>
-                                    <th scope="col" class="px-4 py-3">Harga</th>
+                                    <th scope="col" class="px-4 py-3">Total Harga Sewa</th>
                                     <th scope="col" class="px-4 py-3">Durasi</th>
                                     <th scope="col" class="px-4 py-3">Sisa Waktu</th>
                                     <th scope="col" class="px-4 py-3">Bukti TF</th>
-                                    <th scope="col" class="px-4 py-3">
-                                        <span class="sr-only">Actions</span>
-                                    </th>
+                                    <th scope="col" class="px-4 py-3">Status</th>
+                                    <th scope="col" class="px-4 py-3">Aksi</th>
                                 </tr>
                             </thead>
 
                             {{-- data --}}
                             <tbody>
-                                @foreach ($AllOrdersData as $data)
+                                @foreach ($AllUserData as $data)
                                 <tr class="border-b dark:border-gray-700">
                                     <td class="px-4 py-3">{{ $data->user->name }}</td>
                                     <td class="px-4 py-3">{{ $data->user->nohp }}</td>
                                     <td class="px-4 py-3">{{ $data->item->item_name }}</td>
-                                    <td class="px-4 py-3">{{ $data->item->category }}</td>
-                                    <td class="px-4 py-3">Rp{{ $data->item->price }}</td>
-                                    <td class="px-4 py-3">{{ $data->waktu }}</td>
-                                    <td class="px-4 py-3">{{ $data->sisaWaktu }}</td>
-                                    {{-- <td class="px-4 py-3">{{ $data->start_date }}</td>
-                                    <td class="px-4 py-3">{{ $data->end_date }}</td> --}}
+                                    <td class="px-4 py-3">{{ $data->categories->category_name }}</td>
+                                    <td class="px-4 py-3">Rp{{ $data->finalPrice }}</td>
+                                    <td class="px-4 py-3">{{ $data->rentDuration }}</td>
+                                    <td class="px-4 py-3">{{ $data->remainingTime }}</td>
                                     <td class="px-4 py-3">
                                         @if($data->payment_evidence)
-                                            <img class="w-24 h-24" src="{{ $data->payment_evidence }}" alt="evidence">
+                                        <img class="w-24 h-24" src="{{ $data->payment_evidence }}" alt="evidence">
                                         @else
                                         <img class="w-24 h-24" src="{{ asset('storage/default_profile.png') }}" alt="default_pfp">
                                         @endif
-                                        </td>
-                                    <td class="px-4 py-3 flex items-center justify-end">
-
-
-                                        {{-- CTA --}}
-                                        <button id="apple-imac-27-dropdown-button" data-dropdown-toggle="apple-imac-27-dropdown" class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100" type="button">
-                                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                            </svg>
-                                        </button>
-                                        <div id="apple-imac-27-dropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                                            <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="apple-imac-27-dropdown-button">
-                                                <li>
-                                                    <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
-                                                </li>
-                                            </ul>
-                                            <div class="py-1">
-                                                <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
-                                            </div>
-                                        </div>
-
                                     </td>
+                                    <td class="px-4 py-3">{{ $data->status }}</td>
+
+
+
+                                    <td class="w-36">
+                                        {{-- Start of Edit --}}
+                                            {{-- Button Toggle --}}
+                                            <div class="flex justify-center items-center pb-2">
+                                                <button id="editItemData" data-modal-toggle="editItemData-{{ $data->id }}" class="w-[103px] bg-primary text-white inline-flex items-center hover:text-white border border-cyan hover:bg-turqoise focus:ring-4 focus:outline-none focus:ring-cyanoutline font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="submit">
+                                                    <svg class="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                        <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path>
+                                                        <path clip-rule="evenodd" fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
+                                                    </svg>
+                                                    Tinjau
+                                                </button>
+                                            </div>
+
+
+
+                                            <!-- Pop-Up Edit -->
+                                            <div id="editItemData-{{ $data->id }}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
+                                                <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                                                    {{-- Isi Modal Edit --}}
+                                                    <div class="relative p-4 bg-white rounded-lg shadow sm:p-5">
+                                                        <!-- Header Modal Edit -->
+                                                        <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
+                                                            <h3 class="text-lg font-semibold text-gray-900">
+                                                                Tinjau Data Penyewaan
+                                                            </h3>
+                                                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="editItemData-{{ $data->id }}">
+                                                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                                                <span class="sr-only">Tutup modal</span>
+                                                            </button>
+                                                        </div>
+
+                                                        <!-- Modal body -->
+                                                        <form action="{{ route('update_item', ['id' => $data->id]) }}" method="POST" enctype="multipart/form-data">
+                                                            @method('put')
+                                                            @csrf
+                                                            <div class="pb-8 grid gap-4 mb-4 sm:grid-cols-3">
+                                                                {{-- Nama Barang --}}
+                                                                <div>
+                                                                    <label for="item_name" class="block mb-2 text-base text-start font-medium text-gray-900 ">Nama Penyewa</label>
+                                                                    <input value="{{ $data->user->name }}" required type="text" name="item_name" id="item_name" disabled class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-turqoise focus:border-turqoise block w-full p-2.5 " placeholder="BMX PRO Series">
+                                                                </div>
+                                                                {{-- No Hp --}}
+                                                                <div>
+                                                                    <label for="item_name" class="block mb-2 text-base text-start font-medium text-gray-900 ">No Hp Penyewa</label>
+                                                                    <input value="{{ $data->user->nohp }}" required type="text" name="item_name" id="item_name" disabled class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-turqoise focus:border-turqoise block w-full p-2.5 " placeholder="BMX PRO Series" >
+                                                                </div>
+                                                                {{-- Email --}}
+                                                                <div>
+                                                                    <label for="item_name" class="block mb-2 text-base text-start font-medium text-gray-900 ">Email Penyewa</label>
+                                                                    <input value="{{ $data->user->email }}" required type="text" name="item_name" id="item_name" disabled class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-turqoise focus:border-turqoise block w-full p-2.5 " placeholder="BMX PRO Series">
+                                                                </div>
+                                                                {{-- Nama Barang --}}
+                                                                <div >
+                                                                    <label for="item_name" class="block mb-2  mt-4 text-base text-start font-medium text-gray-900 ">Nama Barang</label>
+                                                                    <input value="{{ $data->item->item_name }}" required type="text" name="item_name" id="item_name" disabled class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-turqoise focus:border-turqoise block w-full p-2.5 " placeholder="BMX PRO s">
+                                                                </div>
+
+                                                                {{-- Kategori --}}
+                                                                <div >
+                                                                    <label for="category" class="block mb-2 mt-4 text-base text-start font-medium text-gray-900 ">Kategori Barang</label>
+                                                                    <input value="{{ $data->categories->category_name }}" required type="text" name="item_name" id="item_name" disabled class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-turqoise focus:border-turqoise block w-full p-2.5 " placeholder="BMX PRO s">
+                                                                    {{-- <select name="category" id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"> --}}
+                                                                        {{-- @foreach($categories as $category)
+                                                                            <option {{ $category == $data->category ? 'selected' : '' }} value="{{ $category }}">{{ $category }}</option>
+                                                                        @endforeach --}}
+                                                                        {{-- <option selected value="{{ $data->category }}">{{ $data->categories->category_name }}</option> --}}
+                                                                    {{-- </select> --}}
+                                                                </div>
+                                                                    {{-- Harga --}}
+                                                                    <div>
+                                                                        <label for="price" class="block mb-2 mt-4 text-base text-start font-medium text-gray-900 ">Harga</label>
+                                                                        <input value="Rp{{ $data->finalPrice }}" type="text" name="price" id="price" disabled class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-turqoise focus:border-turqoise block w-full p-2.5 " placeholder="asep@mail.com" required="">
+                                                                    </div>
+                                                                    {{-- Durasi --}}
+                                                                    <div>
+                                                                        <label for="price" class="block mb-2 mt-4 text-base text-start font-medium text-gray-900 ">Durasi Pinjam</label>
+                                                                        <input value="{{ $data->rentDuration }}" type="text" name="price" id="price" disabled class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-turqoise focus:border-turqoise block w-full p-2.5 " placeholder="asep@mail.com" required="">
+                                                                    </div>
+                                                                    {{-- Sisa Durasi --}}
+                                                                    <div class="sm:col-span-2">
+                                                                        <label for="price" class="block mb-2 mt-4 text-base text-start font-medium text-gray-900 ">Sisa Durasi Pinjam</label>
+                                                                        <input value="{{ $data->remainingTime }}" type="text" name="price" id="price" disabled class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-turqoise focus:border-turqoise block w-full p-2.5 " placeholder="asep@mail.com" required="">
+                                                                    </div>
+                                                                {{-- Photo --}}
+                                                                <div class="sm:col-span-2">
+                                                                    <label for="item_name" class="block mb-2 mt-4 text-base text-start font-medium text-gray-900 ">Bukti Bayar</label>
+                                                                    <img class="w-64 h-auto items-center" src="{{ $data->payment_evidence }}" alt="evidence">
+                                                                </div>
+                                                                {{-- Status --}}
+                                                                <div class="sm:col-span-3">
+                                                                    <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
+                                                                    <input value="{{ $data->status }}" type="text" name="price" id="price" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="asep@mail.com" required="">
+                                                                </div>
+
+                                                            </div>
+
+                                                            {{-- CTA Buttons --}}
+                                                            <div class="flex justify-center items-center space-x-4">
+                                                                <button type="submit" class="text-white bg-primary hover:bg-primary2 focus:ring-4 focus:outline-cyanoutline focus:ring-cyanoutline font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+                                                                    Ubah Data
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        {{-- End of Edit --}}
+
+
+                                </td>
+
+
+
+
+
+
+
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -165,10 +260,7 @@
 
 
     </div>
-
-
-
-
+    <script src="{{ asset('js/flowbite.js') }}"></script>
     </body>
 
 
