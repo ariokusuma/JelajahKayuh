@@ -68,7 +68,7 @@
                             <button  type="submit" class="w-full text-white bg-primary hover:bg-primary2 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-md px-5 py-2.5 text-center ">Buat Akun</button>
                         </div>
                     </form>
-                    <a href="{{  route('login') }}" class="block w-full text-primary bg-white hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-md px-5 py-2.5 text-center">Masuk</a>
+                    <a href="{{  route('login') }}" class="block w-full text-primary bg-white  hover:ring-2 ring-primary  focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-md px-5 py-2.5 text-center">Masuk</a>
 
 
                 </div>

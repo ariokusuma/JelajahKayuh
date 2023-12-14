@@ -79,7 +79,11 @@
                                     {{-- <td class="px-4 py-3">{{ $data->start_date }}</td>
                                     <td class="px-4 py-3">{{ $data->end_date }}</td> --}}
                                     <td class="px-4 py-3">
-                                        <img class="w-24 h-24" src="{{ $data->payment_evidence }}" alt="evidence">
+                                        @if($data->payment_evidence)
+                                            <img class="w-24 h-24" src="{{ $data->payment_evidence }}" alt="evidence">
+                                        @else
+                                        <img class="w-24 h-24" src="{{ asset('storage/default_profile.png') }}" alt="default_pfp">
+                                        @endif
                                         </td>
                                     <td class="px-4 py-3 flex items-center justify-end">
 

@@ -111,6 +111,7 @@ class DashboardController extends Controller
             'item_name' => 'required',
             'category' => 'required',
             'desc' => 'required',
+            'photo' => 'image|mimes:jpeg,png,jpg|max:2048',
             'price' => 'required',
         ],
     );
@@ -130,11 +131,28 @@ class DashboardController extends Controller
 
         $user->save();
 
-        return redirect()->route('dashboard-items')->with('success', 'Tambah Data Berhasil!');
+        return redirect()->route('dashboardItems')->with('success', 'Tambah Data Berhasil!');
     }
 
     public function items() {
         return view('admin.cud.add_items');
+    }
+
+    public function editItems(Request $request, $id) {
+
+    }
+
+
+
+
+    public function deleteUser($id)
+    {
+        dd('Delete user method reached. User ID:', $id);
+        $User = User::findOrFail($id);
+        $User->delete();
+
+
+        return redirect('/dashboard-user');
     }
 
 }

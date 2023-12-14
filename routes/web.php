@@ -58,7 +58,7 @@ Route::GET('logout', [UserController::class, 'logout'])->name('logout');
 // });
 Route::GET('dashboard', [DashboardController::class, 'sumData']);
 Route::GET('dashboard-user', [DashboardController::class, 'getAllUserData']);
-Route::GET('dashboard-items', [DashboardController::class, 'getAllItemsData']);
+Route::GET('dashboard-items', [DashboardController::class, 'getAllItemsData'])->name('dashboardItems');
 Route::GET('dashboard-orders', [DashboardController::class, 'getAllOrdersData']);
 
 
@@ -72,4 +72,7 @@ Route::get('/pemesanan/{id}', [ItemsController::class, 'getdetailpemesanan']);
 // Dashboard
 Route::GET('add/items', [DashboardController::class, 'items'])->name('add_data');
 Route::POST('add/items', [DashboardController::class, 'add_items'])->name('add_data.action');
+
+
+Route::GET('/delete-user/{id}', [DashboardController::class, 'deleteUser']);
 
