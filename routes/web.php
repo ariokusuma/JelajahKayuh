@@ -65,19 +65,12 @@ Route::GET('dashboard-orders', [DashboardController::class, 'getAllOrdersData'])
 
 // Items
 Route::GET('/', [ItemsController::class, 'getAllItemsData']);
-<<<<<<< HEAD
 
 Route::GET('/myprofile', [OrdersController::class, 'getAllOrdersData']);
 Route::get('/pemesanan/{id}', [OrdersController::class, 'getdetailpemesanan']);
 Route::post('/pemesanan/{id}', [OrdersController::class, 'postdetailpemesanan'])->name('pesan');
 Route::post('/bukti/{id}', [OrdersController::class, 'bukti'])->name('bukti');
 
-=======
-Route::GET('/profiluser', [ItemsController::class, 'getAllOrdersData']);
-Route::get('/pemesanan/{id}', [ItemsController::class, 'getdetailpemesanan']);
-Route::post('/pemesanan/{id}', [ItemsController::class, 'postdetailpemesanan'])->name('pesan');
-Route::post('/bukti/{id}', [ItemsController::class, 'bukti'])->name('bukti');
->>>>>>> 4f61ad1ee0f6b0bf8585a426a72a154972f77ce0
 
 
 
@@ -101,15 +94,4 @@ Route::GET('add/order', [DashboardController::class, 'order'])->name('add_order'
 Route::POST('add/order', [DashboardController::class, 'add_order'])->name('add_order_action');
 
 
-<<<<<<< HEAD
-=======
-Route::GET('/myprofile', [OrdersController::class, 'getAllOrdersData']);
-Route::get('/pemesanan/{id}', [OrdersController::class, 'getdetailpemesanan']);
-Route::post('/pemesanan/{id}', [OrdersController::class, 'postdetailpemesanan'])->name('pesan');
-Route::post('/bukti/{id}', [OrdersController::class, 'bukti'])->name('bukti');
-// Dashboard
-Route::GET('add/items', [ItemsController::class, 'items'])->name('add_data');
-Route::POST('add/items', [ItemsController::class, 'add_items'])->name('add_data.action');
-
->>>>>>> 4f61ad1ee0f6b0bf8585a426a72a154972f77ce0
 
