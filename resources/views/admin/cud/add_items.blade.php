@@ -21,25 +21,22 @@
                         Tambah Barang Baru
                     </h1>
 
-                    <form action="{{ route('register.action') }}" method="POST" class="space-y-6" enctype="multipart/form-data" >
+                    <form action="{{ route('add_data.action') }}" method="POST" class="space-y-6" enctype="multipart/form-data" >
                         @csrf
-                        {{-- Nama --}}
+                        {{-- Nama Item --}}
                         <div>
-                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Barang</label>
-                            <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Maria Veronica" required="">
+                            <label for="item_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Barang</label>
+                            <input type="text" name="item_name" id="item_name" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Maria Veronica" required="">
                         </div>
-                        {{-- No hp --}}
+                        {{-- category --}}
                         <div>
-                            <label for="nohp" class="block mb-2 text-sm font-medium text-gray-900 ">Kategori</label>
-                            <input type="text" name="nohp" id="nohp" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="08473859643" required="">
+                            <label for="category" class="block mb-2 text-sm font-medium text-gray-900 ">Kategori</label>
+                            <input type="text" name="category" id="category" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="08473859643" required="">
                         </div>
-                        {{-- Email --}}
+                        {{-- desc --}}
                         <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
-                            <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="asep@mail.com" required="">
-                            @error('email')
-                            <p class="mt-2 text-xs text-red-500">{{ $message }}</p>
-                            @enderror
+                            <label for="desc" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
+                            <input type="text" name="desc" id="desc" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="asep@mail.com" required="">
                         </div>
                         {{-- Photo --}}
                         <div>
@@ -47,23 +44,15 @@
                             <input type="file" name="photo" id="photo" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50  focus:outline-none" aria-describedby="file_input_help" id="file_input" >
                             <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">Format yang diterima : JPEG, PNG, JPG Maks, 2 Mb</p>
                         </div>
-                        {{-- Pass --}}
+                        {{-- Harga --}}
                         <div>
-                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">harga sewa</label>
-                            <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required="">
-                            @error('password')
-                            <p class="mt-2 text-xs text-red-500">{{ $message }}</p>
-                            @enderror
-                        </div>
-                        {{-- Lupa Pass --}}
-                        <div class="flex items-center justify-end">
-                            <a href="#" class="text-sm font-medium  text-primary-600 hover:underline dark:text-primary-500">Lupa Password?</a>
+                            <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">harga sewa</label>
+                            <input type="text" name="price" id="price" placeholder="Rp21341" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required="">
                         </div>
                         <div class="space-y-4">
-                            <button  type="submit" class="w-full text-white bg-primary hover:bg-primary2 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-md px-5 py-2.5 text-center ">Buat Akun</button>
+                            <button  type="submit" class="w-full text-white bg-primary hover:bg-primary2 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-md px-5 py-2.5 text-center ">Tambah Barang</button>
                         </div>
                     </form>
-                    <a href="{{  route('login') }}" class="block w-full text-primary bg-white hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-md px-5 py-2.5 text-center">Masuk</a>
 
 
                 </div>
