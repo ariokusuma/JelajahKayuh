@@ -52,15 +52,16 @@
                         <table class="w-full text-base text-left text-gray-500 dark:text-gray-400">
                             {{-- Table Header --}}
                             <thead class="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
+                                <tr class="text-center">
                                     <th scope="col" class="px-4 py-3">Foto</th>
                                     <th scope="col" class="px-4 py-3">Nama Barang</th>
                                     <th scope="col" class="px-4 py-3">Kategori</th>
                                     <th scope="col" class="px-4 py-3">email</th>
                                     <th scope="col" class="px-4 py-3">Harga Sewa</th>
-                                    <th scope="col" class="px-4 py-3">
+                                    <th scope="col" class="px-4 py-3">Aksi</th>
+                                    {{-- <th scope="col" class="px-4 py-3">
                                         <span class="sr-only">Actions</span>
-                                    </th>
+                                    </th> --}}
                                 </tr>
                             </thead>
 
@@ -77,7 +78,7 @@
                                                         @if ($data->photo)
                                                             <img class="w-24 h-24 aspect-square rounded" src="{{ $data->photo }}" alt="user_pfp">
                                                         @else
-                                                            <img class="w-24 h-24 aspect-square rounded" src="{{ asset('storage/default_profile.png') }}" alt="default_pfp">
+                                                            <img class="w-24 h-24 aspect-square rounded" src="{{ asset('/default_profile.png') }}" alt="default_pfp">
                                                         @endif
                                                     </div>
 
@@ -137,7 +138,7 @@
                                                                         @foreach($categories as $category)
                                                                             <option {{ $category == $data->category ? 'selected' : '' }} value="{{ $category }}">{{ $category }}</option>
                                                                         @endforeach
-                                                                        <option selected value="">{{ $data->category }}</option>
+                                                                        <option selected value="{{ $data->category }}">{{ $data->category }}</option>
                                                                     </select>
                                                                 </div>
                                                                 {{-- desc --}}
@@ -211,7 +212,7 @@
                                 </td>
 
 
-                                    <td class="px-4 py-3 flex items-center justify-end">
+                                    {{-- <td class="px-4 py-3 flex items-center justify-end">
 
 
 
@@ -233,7 +234,7 @@
                                                 <a href="{{ route('delete_item', ['id' => $data->id]) }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
                                             </div>
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
 
 

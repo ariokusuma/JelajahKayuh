@@ -11,26 +11,28 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
 {
 
 
+        // Main Dashboard Controller
+        public function sumData(){
+            $controller = new DashboardController();
+            $total_users = $controller->sumTotalUsers();
+            $total_items = $controller->sumTotalItems();
+            $total_orders = $controller->sumTotalOrders();
 
-    public function sumData(){
-        $controller = new DashboardController();
-        $total_users = $controller->sumTotalUsers();
-        $total_items = $controller->sumTotalItems();
-        $total_orders = $controller->sumTotalOrders();
+            // dd($total_orders);
 
-        // dd($total_orders);
+            return view('admin.dashboard', [
+                'total_users' => $total_users->total_users,
+                'total_items' => $total_items->total_items,
+                'total_orders' => $total_orders->total_orders,
+            ]);
+        }
 
-        return view('admin.dashboard', [
-            'total_users' => $total_users->total_users,
-            'total_items' => $total_items->total_items,
-            'total_orders' => $total_orders->total_orders,
-        ]);
-    }
 
 
     private function sumTotalUsers(): View
@@ -51,12 +53,7 @@ class DashboardController extends Controller
 
 
 
-    public function getAllUserData(): View
-    {
-        $AllUserData = DB::table('users')->get();
 
-        return view('admin.dashboard_users', ['AllUserData' => $AllUserData]);
-    }
 
     public function getAllItemsData(): View
     {
@@ -78,16 +75,12 @@ class DashboardController extends Controller
         $AllOrdersData = orders::with('item', 'user')->get();
 
         foreach ($AllOrdersData as $order) {
-            $waktu = '';
-            $sisaWaktu = '';
 
             $startDate = Carbon::parse($order->start_date);
             // $endDate = Carbon::parse($order->end_date);
 
             $sisaHari = max(0, 5 - $startDate->diffInDays());
 
-            // hitung sisa Waktu
-            // $waktu = $endDate->diffInDays($startDate);
 
             $waktu = $sisaHari . ' Hari';
 
@@ -97,13 +90,9 @@ class DashboardController extends Controller
             $jam = $now->diffInHours($startDate) % 24; // Limit hours to 24
             $menit = $now->diffInMinutes($startDate) % 60;
 
-            // $sisaWaktu = $now->diffInDays($endDate) . ' Hari ' . $now->diffInHours($endDate) . ' Jam ' . $now->diffInMinutes($endDate) . ' Menit left';
-            // $sisaWaktu = $hari . ' Hari ' . $jam . ' Jam ' . $menit . ' Menit';
             $sisaWaktu = $hari . ' Hari ' . $jam . ' Jam ' . $menit . ' Menit until 5 days since start';
 
 
-            // $order->waktu = $waktu;
-            // $order->sisaWaktu = $sisaWaktu;
 
 
         }
@@ -117,6 +106,20 @@ class DashboardController extends Controller
     // ================================== User Controllers ==================================
 
      // CRUD User
+
+    public function getAllUserData(): View
+    {
+        $AllUserData = DB::table('users')->get();
+
+        $roleType = [
+            0 => 'Admin',
+            2 => 'Personal'
+        ];
+
+        return view('admin.dashboard_users', ['AllUserData' => $AllUserData, 'roleType' => $roleType]);
+    }
+
+
     public function add_user() {
         return view('admin.cud.add_users');
     }
@@ -178,6 +181,33 @@ class DashboardController extends Controller
         return redirect()->route('dashboardUsers')->with('success', 'Tambah Data Berhasil!');
     }
 
+    // ============= UPDATE USER =============================
+    public function edit_user(Request $request, $id) {
+        // dd($request->all());
+
+        $cari = User::find($id);
+
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('photos', 'public');
+
+            $cari->photo = $photoPath;
+        }
+
+        $cari->update([
+            'role' => $request->role,
+            'name' => $request->name,
+            'nohp' => $request->nohp,
+            'email' => $request->email,
+        ]);
+
+        // if ($request->hasFile('photo')) {
+        //     $photoPath = $request->file('photo')->store('photos', 'public'); // simpan foro ke 'public/photos'
+        //     $cari->photo = $photoPath;
+        // }
+
+        return redirect('/dashboard-user');
+    }
+
 
     public function delete_user($id) {
         // dd('Delete user method reached. User ID:', $id);
@@ -228,6 +258,11 @@ class DashboardController extends Controller
 
         $cari = items::find($id);
 
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('photos', 'public');
+            $cari->photo = $photoPath;
+        }
+
         $cari->update([
             'item_name' => $request->item_name,
             'category' => $request->category,
@@ -235,10 +270,10 @@ class DashboardController extends Controller
             'price' => $request->price,
         ]);
 
-        if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('photos', 'public'); // simpan foro ke 'public/photos'
-            $cari->photo = $photoPath;
-        }
+        // if ($request->hasFile('photo')) {
+        //     $photoPath = $request->file('photo')->store('photos', 'public'); // simpan foro ke 'public/photos'
+        //     $cari->photo = $photoPath;
+        // }
 
         return redirect('/dashboard-items');
     }

@@ -77,8 +77,8 @@ Route::post('/bukti/{id}', [ItemsController::class, 'bukti'])->name('bukti');
 // CRUD Users
 Route::GET('add/user', [DashboardController::class, 'add_user'])->name('add_user');
 Route::POST('add/user', [DashboardController::class, 'add_user_action'])->name('add_user_action');
+Route::put('update/user/{id}', [DashboardController::class, 'edit_user'])->name('update_user');
 Route::get('/delete/{id}', [DashboardController::class, 'delete_user'])->name('delete_user');
-// Route::GET('/delete-user/{id}', [DashboardController::class, 'deleteUser']);
 
 
 // CRUD Item

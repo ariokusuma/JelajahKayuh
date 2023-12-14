@@ -17,25 +17,30 @@ class orders extends Seeder
             [
                 'item_id' => 1,
                 'user_id' => 1,
-                'payment_evidence' => 'path/to/payment/evidence.jpg',
+                'category' => 3,
                 'status' => 1, // Replace with the desired status
+                'payment_evidence' => 'path/to/payment/evidence.jpg',
                 'start_date' => now(),
                 'end_date' => now()->addDays(5), // Example: Order is for 7 days
-                'comments' => 'This is a sample order comment.',
+                'price' => 10000,
+                'comments' => 'butuh cepat',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'item_id' => 4,
-                'user_id' => 2,
+                'item_id' => 1,
+                'user_id' => 1,
+                'category' => 2,
+                'status' => 1, // Replace with the desired status
                 'payment_evidence' => 'path/to/payment/evidence.jpg',
-                'status' => 5, // Replace with the desired status
                 'start_date' => now(),
-                'end_date' => now()->addDays(3), // Example: Order is for 7 days
-                'comments' => 'This is a sample order comment.',
+                'end_date' => now()->addDays(5), // Example: Order is for 7 days
+                'price' => 10000,
+                'comments' => 'Hubungi',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+
         ]);
     }
 }
