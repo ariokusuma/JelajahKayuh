@@ -11,12 +11,11 @@
     <div class="px-4 mx-auto pb-12">
         <div class="flex items-center justify-between px-64 py-4 text-gray-900 whitespace-nowrap dark:text-white">
             <div class="flex items-center gap-2  ">
-                <img class="w-24 h-24 rounded-full" src="{{  Auth::user()->photo }}" alt="Jese image">
+                <img class="w-24 h-24 rounded-full" src="https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?q=80&w=1868&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Jese image">
                 <div class="ps-3">
-                    <div class="text-xl font-semibold">{{Auth::user()->name}}</div>
-                    <div class="text-lg font-normal text-gray-400">{{Auth::user()->email}}</div>
+                    <div class="text-xl font-semibold">{{\Illuminate\Support\Facades\Auth::user()->name}}</div>
+                    <div class="text-lg font-normal text-gray-400">{{\Illuminate\Support\Facades\Auth::user()->email}}</div>
                 </div>
-                <div class="w-64 text-center text-xl font-semibold">{{ Auth::user()->role == 0 ? 'Admin' : 'Personal' }}</div>
             </div>
             <a href="/ubahprofil" class="text-grey-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-auto">Ubah Profil</a>
         </div>
@@ -68,15 +67,8 @@
                 </tr>
             </thead>
             <tbody>
-
-
-                <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b ">
-                    @if ($noTransactionData)
-                    <td colspan="10" class="px-6 py-4 text-xl text-center ">
-                        <p>Belum ada data pesanan</p>
-                    </td>
-                    @else
-                    @foreach ($AllOrdersData as $data)
+                @foreach ($AllOrdersData as $data)
+                <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                     <td class="px-6 py-4">
                         1
                     </td>
@@ -100,31 +92,8 @@
                         <img class="w-24 h-24" src="{{asset('bukti_transfer/' . $data->payment_evidence )}}" alt="evidence">
                     </td>
                     <td class="px-6 py-4">
-                        <span id="statusSpan" class="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">{{ $data->status }}</span>
+                        <span class="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">{{ $data->status }}</span>
                     </td>
-
-                    <script>    
-                        // Mendapatkan nilai status dari elemen HTML
-                        var status = document.getElementById("statusSpan").innerText;
-                    
-                        // Fungsi untuk menerjemahkan status angka menjadi teks
-                        function translateStatus(status) {
-                            switch (status) {
-                                case "1":
-                                    return "Waiting for Payment";
-                                case "2":
-                                    return "Done";
-                                case "3":
-                                    return "Rejected";
-                                // Tambahkan kasus lain jika diperlukan
-                                default:
-                                    return "Unknown Status";
-                            }
-                        }
-                    
-                        // Mengganti teks status dengan teks terjemahan
-                        document.getElementById("statusSpan").innerText = translateStatus(status);
-                    </script>
                     
                     <!-- Modal toggle -->
 
@@ -144,7 +113,6 @@
                         {{ $data->comments }}
                     </td>
                 </tr>
-                {{-- @endforeach --}}
 
                 <!-- Main modal -->
                 <div id="default-modal{{$data->id}}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -180,7 +148,6 @@
                 </div>
 
                 @endforeach
-                @endif
             </tbody>
         </table>
     </div>

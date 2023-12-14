@@ -76,7 +76,7 @@
                                                     <div class="pl-4 grid auto-cols-max">
                                                         {{-- <img class="w-16 h-16 aspect-square rounded-full" src="{{ asset('upload/foto-profile/' . auth()->user()->foto) }}" alt="user_pfp"> --}}
                                                         @if ($data->photo)
-                                                            <img class="w-24 h-24 aspect-square rounded" src="{{ $data->photo }}" alt="user_pfp">
+                                                            <img class="w-24 h-24 aspect-square rounded" src="img/{{ $data->photo }}" alt="user_pfp">
                                                         @else
                                                             <img class="w-24 h-24 aspect-square rounded" src="{{ asset('/default_profile.png') }}" alt="default_pfp">
                                                         @endif

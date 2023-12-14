@@ -84,6 +84,7 @@ class items extends Seeder
             //     'price' => 200000,
             //     'photo' => 'Surly Long Haul Trucker.jpg',
             // ],
+
             ]);
     }
 }

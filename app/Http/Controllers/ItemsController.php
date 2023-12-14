@@ -96,10 +96,8 @@ class ItemsController extends Controller
             ]);
     }
 
-
     public function items() {
         return view('admin.cud.add_items');
-
     }
 
 
