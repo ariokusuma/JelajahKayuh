@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @vite(['resources/css/app.css','resources/js/app.js'])
-    <title>Daftar Akun</title>
-</head>
-<body class="bg-gray-50">
-    <section class="bg-gray-50 ">
-        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+@extends('layoutmain.main')
+
+@section('container')
+
+        <div class="flex flex-col items-center justify-center px-6 py-24 mx-auto ">
             <a href="/" class="flex items-center mb-6 text-2xl font-semibold text-gray-900">
                 <img class="w-64 h-16" src="{{ asset('assets/logo.svg') }}" alt="JelajahKayuh_logo">
             </a>
@@ -74,6 +67,5 @@
                 </div>
             </div>
         </div>
-    </section>
-</body>
-</html>
+
+@endsection

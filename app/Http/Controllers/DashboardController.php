@@ -102,8 +102,8 @@ class DashboardController extends Controller
             $sisaWaktu = $hari . ' Hari ' . $jam . ' Jam ' . $menit . ' Menit until 5 days since start';
 
 
-            $order->waktu = $waktu;
-            $order->sisaWaktu = $sisaWaktu;
+            // $order->waktu = $waktu;
+            // $order->sisaWaktu = $sisaWaktu;
 
 
         }
@@ -111,6 +111,7 @@ class DashboardController extends Controller
 
         return view('admin.dashboard_orders', ['AllOrdersData' => $AllOrdersData]);
     }
+
 
 
     // ================================== User Controllers ==================================
@@ -245,6 +246,7 @@ class DashboardController extends Controller
     public function editItems(Request $request, $id) {
 
     }
+
 
     public function delete_item($id) {
         // dd('Delete user method reached. User ID:', $id);
