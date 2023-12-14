@@ -92,8 +92,32 @@
                         <img class="w-24 h-24" src="{{asset('bukti_transfer/' . $data->payment_evidence )}}" alt="evidence">
                     </td>
                     <td class="px-6 py-4">
-                        <span class="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">{{ $data->status }}</span>
+                        <span id="statusSpan" class="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">{{ $data->status }}</span>
                     </td>
+
+                    <script>    
+                        // Mendapatkan nilai status dari elemen HTML
+                        var status = document.getElementById("statusSpan").innerText;
+                    
+                        // Fungsi untuk menerjemahkan status angka menjadi teks
+                        function translateStatus(status) {
+                            switch (status) {
+                                case "1":
+                                    return "Waiting for Payment";
+                                case "2":
+                                    return "Done";
+                                case "3":
+                                    return "Rejected";
+                                // Tambahkan kasus lain jika diperlukan
+                                default:
+                                    return "Unknown Status";
+                            }
+                        }
+                    
+                        // Mengganti teks status dengan teks terjemahan
+                        document.getElementById("statusSpan").innerText = translateStatus(status);
+                    </script>
+                    
                     <!-- Modal toggle -->
 
                     @if($data->status == 1)
@@ -157,10 +181,6 @@
 
 </section>
 {{-- Form --}}
-
-
-
-
 
 
 
