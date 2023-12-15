@@ -14,9 +14,24 @@ use Illuminate\Support\Facades\DB;
 
 class ItemsController extends Controller
 {
+    public function payment($id){
+        $data = orders::find($id);
+        return view('pembayaran' , ['data'=>$data]);
+    }
 
     public function getAllItemsData(): View
     {
+        if (Auth::check()){
+            $userOrders = Auth::user()->order->where('status' , 1);
+            $userOrders2 = Auth::user()->order->where('status' , 2);
+
+           $userOrdersCount = count($userOrders) + count($userOrders2);
+
+            return view('landingpage', [
+                "AllItemsData" => items::all(), 'limit' => $userOrdersCount
+            ]);
+
+        }
         return view('landingpage', [
             "AllItemsData" => items::all(),
         ]);
