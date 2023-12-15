@@ -87,11 +87,11 @@ class OrdersController extends Controller
         $order->user_id = Auth::user()->id;
         $order->payment_evidence = null;
         $order->status = 1;
-        $order->comments = 'No Telp Yang Bisa Di Hubugni' . $request->no_telp;
+        $order->category= $id;
         $order->start_date = $request->date;
-
+        
         $carbonDate = Carbon::parse($request->date);
-
+        
         if ($request->masa == '1'){
             $order->end_date = $carbonDate->addDays(1);
         }
@@ -102,10 +102,18 @@ class OrdersController extends Controller
         if ($request->masa == '3'){
             $order->end_date = $carbonDate->addDays(3);
         }
+        $order->price = $request->price;
+        $order->comments = 'No Telp Yang Bisa Di Hubungi' . $request->no_telp;
 
         $order->save();
-        return redirect('/');
+        session()->flash('success', 'Data berhasil disimpan.');
+        return redirect()->route('payment' , ['id'=>$order->id]);
 
+    }
+
+    public function payment($id){
+        $data = orders::find($id);
+        return view('pembayaran' , ['data'=>$data]);
     }
 
     public function bukti($id , Request $request){
@@ -122,8 +130,17 @@ class OrdersController extends Controller
         $data->update();
 
 
-
+        session()->flash('success', 'Data berhasil disimpan.');
         return redirect()->back();
+    }
+
+    public function destroy($id){
+        $data = orders::find($id);
+        $data->delete();
+
+        session()->flash('success', 'Data berhasil dihapus.');
+        return redirect()->back();
+
     }
 
 
@@ -154,8 +171,4 @@ class OrdersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(orders $orders)
-    {
-        //
-    }
 }

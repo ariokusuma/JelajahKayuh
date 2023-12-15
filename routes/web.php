@@ -59,6 +59,7 @@ Route::GET('logout', [UserController::class, 'logout'])->name('logout');
 Route::GET('dashboard', [DashboardController::class, 'sumData']);
 Route::GET('dashboard-user', [DashboardController::class, 'getAllUserData'])->name('dashboardUsers');
 Route::GET('dashboard-items', [DashboardController::class, 'getAllItemsData'])->name('dashboardItems');
+Route::GET('dashboard-items/cari', [DashboardController::class, 'cari'])->name('cari');
 Route::GET('dashboard-category', [DashboardController::class, 'getAllCategoryData'])->name('dashboardCategory');
 Route::GET('dashboard-orders', [DashboardController::class, 'getAllOrdersData'])->name('dashboardOrders');
 
@@ -71,7 +72,11 @@ Route::GET('/myprofile', [OrdersController::class, 'getAllOrdersData']);
 Route::get('/pemesanan/{id}', [OrdersController::class, 'getdetailpemesanan']);
 Route::post('/pemesanan/{id}', [OrdersController::class, 'postdetailpemesanan'])->name('pesan');
 Route::post('/bukti/{id}', [OrdersController::class, 'bukti'])->name('bukti');
+Route::get('/pembayaran/{id}' , [OrdersController::class , 'payment'])->name('payment');
 
+
+Route::put('/transactions/{id}', [OrdersController::class, 'update'])->name('transactions.update');
+Route::delete('/transactions/{id}', [OrdersController::class, 'destroy'])->name('transactions.destroy');
 
 
 
