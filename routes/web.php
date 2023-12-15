@@ -59,17 +59,25 @@ Route::GET('logout', [UserController::class, 'logout'])->name('logout');
 Route::GET('dashboard', [DashboardController::class, 'sumData']);
 Route::GET('dashboard-user', [DashboardController::class, 'getAllUserData'])->name('dashboardUsers');
 Route::GET('dashboard-items', [DashboardController::class, 'getAllItemsData'])->name('dashboardItems');
+Route::GET('dashboard-items/cari', [DashboardController::class, 'cari'])->name('cari');
 Route::GET('dashboard-category', [DashboardController::class, 'getAllCategoryData'])->name('dashboardCategory');
 Route::GET('dashboard-orders', [DashboardController::class, 'getAllOrdersData'])->name('dashboardOrders');
+Route::GET('dashboard-penalty', [DashboardController::class, 'getAllPenaltyData'])->name('dashboardPenalty');
 
 
 
 // Items
 Route::GET('/', [ItemsController::class, 'getAllItemsData']);
-Route::GET('/profiluser', [ItemsController::class, 'getAllOrdersData']);
-Route::get('/pemesanan/{id}', [ItemsController::class, 'getdetailpemesanan']);
-Route::post('/pemesanan/{id}', [ItemsController::class, 'postdetailpemesanan'])->name('pesan');
-Route::post('/bukti/{id}', [ItemsController::class, 'bukti'])->name('bukti');
+
+Route::GET('/myprofile', [OrdersController::class, 'getAllOrdersData']);
+Route::get('/pemesanan/{id}', [OrdersController::class, 'getdetailpemesanan']);
+Route::post('/pemesanan/{id}', [OrdersController::class, 'postdetailpemesanan'])->name('pesan');
+Route::post('/bukti/{id}', [OrdersController::class, 'bukti'])->name('bukti');
+Route::get('/pembayaran/{id}' , [OrdersController::class , 'payment'])->name('payment');
+
+
+Route::put('/transactions/{id}', [OrdersController::class, 'update'])->name('transactions.update');
+Route::delete('/transactions/{id}', [OrdersController::class, 'destroy'])->name('transactions.destroy');
 
 
 
@@ -109,5 +117,6 @@ Route::post('/bukti/{id}', [OrdersController::class, 'bukti'])->name('bukti');
 
 Route::GET('add/items', [ItemsController::class, 'items'])->name('add_data');
 Route::POST('add/items', [ItemsController::class, 'add_items'])->name('add_data.action');
+
 
 

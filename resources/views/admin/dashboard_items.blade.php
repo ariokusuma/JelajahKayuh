@@ -26,7 +26,7 @@
                     <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                         <div class="w-full md:w-1/2">
                             {{-- Search Bar --}}
-                            <form class="flex items-center">
+                            <form action="{{ route("cari") }} " class="flex items-center" method="GET">
                                 <label for="simple-search" class="sr-only">Search</label>
                                 <div class="relative w-full">
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -34,8 +34,11 @@
                                             <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
                                         </svg>
                                     </div>
-                                    <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search" required="">
+                                    <input type="text" placeholder="Search by name" name="cari" alue="{{ $cari ?? '' }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" >
                                 </div>
+                                <button  type="submit" class="ms-5 text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                                    Cari
+                                </button>
                             </form>
 
                         </div>
@@ -76,9 +79,9 @@
                                                     <div class="pl-4 grid auto-cols-max">
                                                         {{-- <img class="w-16 h-16 aspect-square rounded-full" src="{{ asset('upload/foto-profile/' . auth()->user()->foto) }}" alt="user_pfp"> --}}
                                                         @if ($data->photo)
-                                                            <img class="w-24 h-24 aspect-square rounded" src="{{ $data->photo }}" alt="user_pfp">
+                                                            <img class="w-24 h-24 aspect-square rounded" src="{{ $data->photo }}">
                                                         @else
-                                                            <img class="w-24 h-24 aspect-square rounded" src="{{ asset('/default_profile.png') }}" alt="default_pfp">
+                                                            <img class="w-24 h-24 aspect-square rounded" src="{{ asset('storage/default_profile.png') }}" alt="default_pfp">
                                                         @endif
                                                     </div>
 

@@ -52,7 +52,6 @@
                             <thead class="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="px-4 py-3">Nama Peminjam</th>
-                                    <th scope="col" class="px-4 py-3">No. Hp</th>
                                     <th scope="col" class="px-4 py-3">Barang</th>
                                     <th scope="col" class="px-4 py-3">Kategori</th>
                                     <th scope="col" class="px-4 py-3">Total Harga Sewa</th>
@@ -69,7 +68,6 @@
                                 @foreach ($AllUserData as $data)
                                 <tr class="border-b dark:border-gray-700">
                                     <td class="px-4 py-3">{{ $data->user->name }}</td>
-                                    <td class="px-4 py-3">{{ $data->user->nohp }}</td>
                                     <td class="px-4 py-3">{{ $data->item->item_name }}</td>
                                     <td class="px-4 py-3">{{ $data->categories->category_name }}</td>
                                     <td class="px-4 py-3">Rp{{ $data->finalPrice }}</td>
@@ -77,12 +75,43 @@
                                     <td class="px-4 py-3">{{ $data->remainingTime }}</td>
                                     <td class="px-4 py-3">
                                         @if($data->payment_evidence)
-                                        <img class="w-24 h-24" src="{{ $data->payment_evidence }}" alt="evidence">
+                                        <img class="w-24 h-24" src="{{asset('bukti_transfer/' . $data->payment_evidence )}}" alt="evidence">
                                         @else
                                         <img class="w-24 h-24" src="{{ asset('storage/default_profile.png') }}" alt="default_pfp">
                                         @endif
                                     </td>
-                                    <td class="px-4 py-3">{{ $data->status }}</td>
+                                    <td class="px-4 py-3">
+                                        @if($data->status == 1)
+                                            <div class="">
+                                                <p class="flex items-center text-center justify-center bg-red text-white rounded ">Belum Kirim Bukti</p>
+                                            </div>
+                                        @elseif($data->status == 0)
+                                            <div class=" ">
+                                                <p class="flex items-center justify-center bg-green-500 text-white rounded ">Disetujui</p>
+                                            </div>
+                                        @elseif($data->status == 2)
+                                            <div class=" ">
+                                                <p class="flex items-center  text-center justify-center bg-yellow-500 text-white rounded ">Bukti Terkirim - Menunggu Verifikasi</p>
+                                            </div>
+                                        @elseif($data->status == 3)
+                                            <div class=" ">
+                                                <p class="flex items-center  text-center justify-center bg-red text-gray-800 rounded ">Ditolak</p>
+                                            </div>
+                                        @elseif($data->status == 4)
+                                            <div class=" ">
+                                                <p class="flex items-center  text-center justify-center bg-red text-gray-800 rounded ">Meminta Pengembalian</p>
+                                            </div>
+                                        @elseif($data->status == 5)
+                                            <div class=" ">
+                                                <p class="flex items-center  text-center justify-center bg-green-500  text-gray-800 rounded ">Pengembalian Diterima</p>
+                                            </div>
+                                        @elseif($data->status == 6)
+                                        <div class=" ">
+                                            <p class="flex items-center  text-center justify-center bg-red text-white rounded "> Telat - Denda</p>
+                                        </div>
+                                        @endif
+                                        {{-- {{ $data->status }} --}}
+                                    </td>
 
 
 
@@ -147,12 +176,6 @@
                                                                 <div >
                                                                     <label for="category" class="block mb-2 mt-4 text-base text-start font-medium text-gray-900 ">Kategori Barang</label>
                                                                     <input value="{{ $data->categories->category_name }}" required type="text" name="item_name" id="item_name" disabled class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-turqoise focus:border-turqoise block w-full p-2.5 " placeholder="BMX PRO s">
-                                                                    {{-- <select name="category" id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"> --}}
-                                                                        {{-- @foreach($categories as $category)
-                                                                            <option {{ $category == $data->category ? 'selected' : '' }} value="{{ $category }}">{{ $category }}</option>
-                                                                        @endforeach --}}
-                                                                        {{-- <option selected value="{{ $data->category }}">{{ $data->categories->category_name }}</option> --}}
-                                                                    {{-- </select> --}}
                                                                 </div>
                                                                     {{-- Harga --}}
                                                                     <div>
@@ -172,12 +195,50 @@
                                                                 {{-- Photo --}}
                                                                 <div class="sm:col-span-2">
                                                                     <label for="item_name" class="block mb-2 mt-4 text-base text-start font-medium text-gray-900 ">Bukti Bayar</label>
-                                                                    <img class="w-64 h-auto items-center" src="{{ $data->payment_evidence }}" alt="evidence">
+                                                                    <img class=" h-[400px] items-center" src="{{asset('bukti_transfer/' . $data->payment_evidence )}}" alt="evidence">
                                                                 </div>
                                                                 {{-- Status --}}
-                                                                <div class="sm:col-span-3">
+                                                                {{-- <div class="sm:col-span-3">
                                                                     <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
                                                                     <input value="{{ $data->status }}" type="text" name="price" id="price" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="asep@mail.com" required="">
+                                                                </div> --}}
+                                                                <div class="sm:col-span-3">
+                                                                    <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+                                                                    <select id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                                        <option selected="{{ $data->status }}">
+                                                                            {{-- {{ $data->status }} --}}
+                                                                            @if($data->status == 1)
+                                                                            <div class="">
+                                                                                <p class="flex items-center text-center justify-center bg-red text-white rounded ">Belum Kirim Bukti</p>
+                                                                            </div>
+                                                                            @elseif($data->status == 0)
+                                                                                <div class=" ">
+                                                                                    <p class="flex items-center justify-center bg-green-500 text-white rounded ">Disetujui</p>
+                                                                                </div>
+                                                                            @elseif($data->status == 2)
+                                                                                <div class=" ">
+                                                                                    <p class="flex items-center  text-center justify-center bg-yellow-300 text-gray-800 rounded ">Bukti Terkirim - Menunggu Verifikasi</p>
+                                                                                </div>
+                                                                            @elseif($data->status == 3)
+                                                                                <div class=" ">
+                                                                                    <p class="flex items-center  text-center justify-center bg-red text-gray-800 rounded ">Tolak</p>
+                                                                                </div>
+                                                                            @elseif($data->status == 5)
+                                                                                <div class=" ">
+                                                                                    <p class="flex items-center  text-center justify-center bg-green-500  text-gray-800 rounded ">Acc Pengembalian                                                                                    </p>
+                                                                                </div>
+                                                                            @elseif($data->status == 6)
+                                                                                <div class=" ">
+                                                                                    <p class="flex items-center  text-center justify-center bg-green-500  text-gray-800 rounded ">Telat - Denda</p>
+                                                                                </div>
+                                                                            @endif
+                                                                        </option>
+
+                                                                        <option value="0">Setujui</option>
+                                                                        <option value="1">PC</option>
+                                                                        <option value="2">Gaming/Console</option>
+                                                                        <option value="3">Phones</option>
+                                                                    </select>
                                                                 </div>
 
                                                             </div>

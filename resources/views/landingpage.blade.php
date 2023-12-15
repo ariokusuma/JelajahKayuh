@@ -1,5 +1,3 @@
-
-
 @extends('layoutmain.main')
 
 @section('container')
@@ -19,6 +17,18 @@
     </div>
 </div>
 </section>
+
+    @if(session('success'))
+        <div class="flex mt-4 items-center p-4 mb-4 text-sm text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800" role="alert">
+        <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+        </svg>
+        <span class="sr-only">Info</span>
+        <div>
+            <span class="font-medium">Success ! </span>{{ session('success') }}
+        </div>
+    </div>
+    @endif
 {{-- Hero End --}}
 
 {{-- Daftar Sepeda --}}
@@ -32,16 +42,16 @@
     @foreach ($AllItemsData as $data)
         <div class="max-w-sm bg-slate-50 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             @if ($data->photo)
-                <img class="rounded-t-lg object-cover w-full h-52" src="{{ asset('img/'.$data->photo) }}" alt="" />
+                <img class="rounded-t-lg object-cover w-full h-52" src="{{ $data->photo }}" alt="" />
             @else
-                <img class="rounded-t-lg" src="{{ asset('img/'.$data->photo) }}" alt="" />
+                <img class="rounded-t-lg" src="{{ asset('storage/default_profile.png') }}" alt="" />
             @endif
 
             <div class="p-5">
                 <a href="#">
                     <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $data->item_name }}</h5>
                 </a>
-                <p class="px-1 py-0.5 text-sm mb-3 font-normal text-gray-500 bg-gray-100 border border-gray-300">{{ $data->category }}</p>
+                <p class="px-1 py-0.5 text-sm mb-3 font-normal text-gray-500 bg-gray-100 border border-gray-300">{{ $data->categories->category_name}}</p>
                 <p class="mb-3 font-normal text-sm text-gray-700 dark:text-gray-400">{{ $data->desc }}</p>
                 <div class="flex items-center justify-between">
                     <div class="flex items-baseline">
@@ -49,48 +59,22 @@
                         <span class="ms-1 text-sm font-normal text-gray-500 dark:text-gray-400">/24 jam</span>
                     </div>
 
-                </section>
-                {{-- Hero End --}}
+                        @auth()
+                        @if($limit >= 2)
+                            <a href="" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-1.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-12">Pesan</a>
+                            <p>Melebihi Limit Pinjaman</p>
+                        @else
+                            <a href="pemesanan/{{ $data->id }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-1.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-12">Pesan</a>
+                        @endif
+                        @else
 
-                {{-- Daftar Sepeda --}}
-                <section id="DAFTAR" class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
-
-                    <h2 class="mb-4 text-5xl font-bold tracking-tight leading-none text-grey-900 ">Pilih Sepeda sesuai Kebutuhanmu!</h2>
-                    <p class="mb-8 text-lg font-normal text-gray-400 lg:text-xl sm:px-16 lg:px-48">Daftar sepeda terbaik yang dapat kamu pinjam.</p>
-
-
-                    <div class="flex flex-wrap  gap-4 justify-center">
-                        @foreach ($AllItemsData as $data)
-                            <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                                @if ($data->photo)
-                                    <img class="rounded-t-lg object-cover w-full h-52" src="{{ asset('storage/'.$data->photo) }}" alt="" />
-                                @else
-                                    <img class="rounded-t-lg" src="{{ asset('storage/default_profile.png') }}" alt="" />
-                                @endif
-
-                                <div class="p-5">
-                                    <a href="#">
-                                        <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $data->item_name }}</h5>
-                                    </a>
-                                    <p class="px-1 py-0.5 text-sm mb-3 font-normal text-gray-500 bg-gray-100 border border-gray-300">{{ $data->category }}</p>
-                                    <p class="mb-3 font-normal text-sm text-gray-700 dark:text-gray-400">{{ $data->desc }}</p>
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-baseline">
-                                        <span class="text-xl font-bold text-blue-700 dark:text-white">Rp{{ $data->price }}</span>
-                                        <span class="ms-1 text-sm font-normal text-gray-500 dark:text-gray-400">/24 jam</span>
-                                        </div>
-                                        <a href="pemesanan/{{ $data->id }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-1.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-12">Pesan</a>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-
-                        <a href="pemesanan/{{ $data->id }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-1.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-12">Pesan</a>
-                </div>
+                            <a href="" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-1.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-12">Pesan</a>
+                            <p>Harap Login Terlebih Dahulu</p>
+                        @endauth
+                        </div>
             </div>
         </div>
     @endforeach
-
 
 </div>
 

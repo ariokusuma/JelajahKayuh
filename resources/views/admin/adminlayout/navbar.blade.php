@@ -40,7 +40,7 @@
                 </div>
                 <ul class="py-1 text-gray-700 dark:text-gray-300" aria-labelledby="dropdown">
                     <li>
-                        <a href="profiluser"
+                        <a href="{{ url('myprofile') }}"
                             class="block py-2 px-4 text-sm hover:bg-primary hover:text-white">My profile</a>
                     </li>
                     {{-- Log Out --}}
