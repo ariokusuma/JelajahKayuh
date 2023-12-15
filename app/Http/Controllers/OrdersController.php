@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\items;
 use Illuminate\View\View;
+use App\Models\User;
 
 class OrdersController extends Controller
 {
@@ -63,13 +64,7 @@ class OrdersController extends Controller
             'noTransactionData' => $noTransactionData,
         ]);
     }
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+
     public function getdetailpemesanan($id){
 
         return view('pemesanan', [
@@ -82,6 +77,7 @@ class OrdersController extends Controller
      */
 
      public function postdetailpemesanan($id , Request $request){
+        // dd($request->all());
         $order = new orders();
         $order->item_id = $id;
         $order->user_id = Auth::user()->id;
@@ -89,9 +85,9 @@ class OrdersController extends Controller
         $order->status = 1;
         $order->category= $id;
         $order->start_date = $request->date;
-        
+
         $carbonDate = Carbon::parse($request->date);
-        
+
         if ($request->masa == '1'){
             $order->end_date = $carbonDate->addDays(1);
         }
@@ -146,40 +142,43 @@ class OrdersController extends Controller
     public function update_order_user(Request $request, $id)
     {
         // Validate other form fields as needed
-    
+
         // Update the status
         $data = orders::findOrFail($id);
         $data->status = $request->input('status');
         $data->save();
-    
+
         // Redirect or respond as needed
         return redirect('/myprofile');
     }
-    /**
-     * Display the specified resource.
-     */
-    public function show(orders $orders)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(orders $orders)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, orders $orders)
-    {
-        //
-    }
+        // ============= UPDATE USER =============================
+        public function edit_user(Request $request, $id) {
+            // dd($request->all());
 
-    /**
-     * Remove the specified resource from storage.
-     */
+            $cari = User::find($id);
+
+            if ($request->hasFile('photo')) {
+                $photoPath = $request->file('photo')->store('photos', 'public');
+
+                $cari->photo = $photoPath;
+            }
+
+            $cari->update([
+                // 'role' => $request->role,
+                'name' => $request->name,
+                'nohp' => $request->nohp,
+                'email' => $request->email,
+            ]);
+
+            // if ($request->hasFile('photo')) {
+            //     $photoPath = $request->file('photo')->store('photos', 'public'); // simpan foro ke 'public/photos'
+            //     $cari->photo = $photoPath;
+            // }
+
+            return redirect('/myprofile');
+        }
+
+
 }

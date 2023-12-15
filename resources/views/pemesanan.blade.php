@@ -45,7 +45,7 @@
               </select>
         </div>
 
-       
+
 
         <div class="mb-5">
             <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal Mulai Sewa</label>
@@ -53,22 +53,25 @@
         </div>
 
         <div class="mb-5">
-          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Total Harga</label>
-          <p id="total" name="price" class="text-md font-regular text-gray-900 dark:text-white">{{ $pemesanan->price }}</p>
+          <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Total Harga</label>
+          {{-- <input id="total" name="price" value="Rp{{ $pemesanan->price }}" disabled class="text-2xl font-regular text-gray-900 "> --}}
+          <input id="total" name="price" type="hidden" value="{{ $pemesanan->price }}">
+          <input id="displayTotal" value="Rp{{ $pemesanan->price }}" disabled class="text-2xl font-regular text-gray-900">
         </div>
-        
+
         <script>
             function calculateTotal() {
                 // Mendapatkan nilai masa sewa dan harga dari elemen HTML
                 var masaSewa = document.getElementById("masa").value;
                 var harga = {{ $pemesanan->price }};
-        
+
                 // Melakukan perkalian
                 var totalHarga = masaSewa * harga;
-        
-        
+
+
                 // Menampilkan hasil perkalian pada elemen HTML dengan ID "total"
-                document.getElementById("total").innerText = totalHarga;
+                // document.getElementById("total").innerText = totalHarga;
+                document.getElementById("total").value = totalHarga;
             }
         </script>
 

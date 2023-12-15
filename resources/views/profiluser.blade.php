@@ -29,7 +29,74 @@
                     <div class="text-lg font-normal text-gray-400">{{\Illuminate\Support\Facades\Auth::user()->email}}</div>
                 </div>
             </div>
-            <a href="/ubahprofil" class="text-grey-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-auto">Ubah Profil</a>
+            <button id="editItemData" data-modal-toggle="editItemData-{{ Auth::user()->id }}" class="w-[103px] bg-primary text-white inline-flex items-center hover:text-white border border-cyan hover:bg-turqoise focus:ring-4 focus:outline-none focus:ring-cyanoutline font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="submit">
+                <svg class="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path>
+                    <path clip-rule="evenodd" fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
+                </svg>
+                Edit
+            </button>
+            {{-- <a href="{{ route('update_user', ['id' => Auth::user()->id]) }}" class="text-grey-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-auto">Ubah Profil</a> --}}
+
+                <!-- Pop-Up Edit -->
+                <div id="editItemData-{{ Auth::user()->id }}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
+                    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                        {{-- Isi Modal Edit --}}
+                        <div class="relative p-4 bg-white rounded-lg shadow base:p-5">
+                            <!-- Header Modal Edit -->
+                            <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b base:mb-5 dark:border-gray-600">
+                                <h3 class="text-lg font-semibold text-gray-900">
+                                    Edit Data Pengguna
+                                </h3>
+                                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="editItemData-{{ Auth::user()->id }}">
+                                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                    <span class="sr-only">Tutup modal</span>
+                                </button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <form action="{{ route('edit_rofile', ['id' => Auth::user()->id]) }}" method="POST" enctype="multipart/form-data">
+                                @method('put')
+                                @csrf
+                                <div class="pb-8">
+                                    {{-- Nama Pengguna --}}
+                                    <div>
+                                        <label for="name" class="block mb-2 text-base text-start font-medium text-gray-900 ">Nama Pengguna</label>
+                                        <input value="{{ Auth::user()->name }}" required type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-turqoise focus:border-turqoise block w-full p-2.5 " placeholder="SERTIFIKASI">
+                                    </div>
+
+                                    {{-- Email --}}
+                                    <div>
+                                        <label for="email" class="block mb-2 mt-4 text-base font-medium text-gray-900 dark:text-white">Harga</label>
+                                        <input value="{{ Auth::user()->email }}" type="text" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 base:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="asep@mail.com" required="">
+                                    </div>
+                                    {{-- nohp --}}
+                                    <div>
+                                        <label for="nohp" class="block mb-2 mt-4 text-base text-start font-medium text-gray-900 ">Nomor Hp </label>
+                                        <input value="{{ Auth::user()->nohp }}" type="text" name="nohp" id="nohp" class="bg-gray-50 border border-gray-300 text-gray-900 base:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="asep@mail.com" required="">
+                                    </div>
+
+                                    {{-- Photo --}}
+                                    <div>
+                                        <label for="photo" class="block mb-2 mt-4 text-base font-medium text-gray-900">Upload file</label>
+                                        <input type="file" name="photo" id="photo" class="block w-full text-base text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50  focus:outline-none" aria-describedby="file_input_help" id="file_input" >
+                                        <input type="hidden" name="default_photo" id="default_photo" value="{{ Auth::user()->photo }}">
+                                        <p class="mt-1 text-base text-gray-500 dark:text-gray-300" id="file_input_help">Format yang diterima : JPEG, PNG, JPG Maks, 2 Mb</p>
+                                    </div>
+                                </div>
+
+                                {{-- CTA Buttons --}}
+                                <div class="flex justify-center items-center space-x-4">
+                                    <button type="submit" class="text-white bg-primary hover:bg-primary2 focus:ring-4 focus:outline-cyanoutline focus:ring-cyanoutline font-medium rounded-lg text-base px-5 py-2.5 text-center ">
+                                        Ubah Data
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                                        {{-- End of Edit --}}
         </div>
     </div>
 
@@ -175,48 +242,15 @@
                         @elseif($data->status == 6)
                         Anda Melewati Batas Selesai Sewa
                             <p class="flex items-center  text-center justify-center bg-red text-white rounded "> Denda : Rp500.000</p>
-                        
+
                         @else
                             -
                         @endif
                     </td>
-                       
+
 
                     </td>
                 </tr>
-
-                <!-- Main modal -->
-                {{-- <div id="default-modal{{$data->id}}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                    <div class="relative p-4 w-full max-w-2xl max-h-full">
-                        <!-- Modal content -->
-                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                            <!-- Modal header -->
-                            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                    Terms of Service
-                                </h3>
-                                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal{{$data->id}}">
-                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                    </svg>
-                                    <span class="sr-only">Close modal</span>
-                                </button>
-                            </div>
-                            <!-- Modal body -->
-                            <div class="p-4 md:p-5 space-y-4">
-                                <form action="{{route('bukti' , ['id'=>$data->id])}}" method="post" enctype="multipart/form-data">
-                                    @csrf
-                                    <!-- Field lainnya -->
-                                    <label for="bukti_transfer">Bukti Transfer:</label>
-                                    <input type="file" name="bukti_transfer" >
-
-                                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
-                </div> --}}
                 <div id="default-modalU{{$data->id}}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                     <div class="relative p-4 w-full max-w-2xl max-h-full">
                         <!-- Modal content -->
@@ -257,7 +291,7 @@
     {{-- Tabel Pesanan End --}}
 
 
-
+    <script src="{{ asset('js/flowbite.js') }}"></script>
 </section>
 {{-- Form --}}
 
