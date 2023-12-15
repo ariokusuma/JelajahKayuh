@@ -59,6 +59,7 @@ Route::GET('logout', [UserController::class, 'logout'])->name('logout');
 Route::GET('dashboard', [DashboardController::class, 'sumData']);
 Route::GET('dashboard-user', [DashboardController::class, 'getAllUserData'])->name('dashboardUsers');
 Route::GET('dashboard-items', [DashboardController::class, 'getAllItemsData'])->name('dashboardItems');
+Route::GET('dashboard-items/cari', [DashboardController::class, 'cari'])->name('cari');
 Route::GET('dashboard-category', [DashboardController::class, 'getAllCategoryData'])->name('dashboardCategory');
 Route::GET('dashboard-orders', [DashboardController::class, 'getAllOrdersData'])->name('dashboardOrders');
 

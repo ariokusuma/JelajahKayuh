@@ -199,6 +199,25 @@ class DashboardController extends Controller
         return view('admin.dashboard_items', ['AllItemsData' => $AllItemsData, 'categories' => $categories]);
     }
 
+    public function cari(Request $request)
+	{
+		// menangkap data pencarian
+		$cari = $request->cari;
+ 
+    		// mengambil data dari table items sesuai pencarian data
+		$AllItemsData = DB::table('items')
+		->where('item_name','like',"%".$cari."%")->get();;
+        $categories = [
+            'Sepeda Gunung (Mountain Bike)',
+            'Sepeda Balap (Road Bike)',
+            'Sepeda Lipat',
+            'Sepeda Listrik',
+        ];
+    		// mengirim data items ke view 
+		return view('admin.dashboard_items',['AllItemsData' => $AllItemsData, 'categories' => $categories]);
+ 
+	}
+
 
     public function add_items(Request $request) {
         // dd($request->all());
