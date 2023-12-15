@@ -426,4 +426,25 @@ public function delete_category($id) {
     return redirect('/dashboard-category');
 }
 
+
+public function update_order(Request $request, $id)
+{
+    // Validate other form fields as needed
+
+    // Update the status
+    $data = orders::findOrFail($id);
+    $data->status = $request->input('status');
+    $data->save();
+
+    // Redirect or respond as needed
+    return redirect('/dashboard-orders');
 }
+
+
+
+}
+
+
+
+
+

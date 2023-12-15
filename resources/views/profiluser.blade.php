@@ -129,7 +129,7 @@
                                 </div>
                             @elseif($data->status == 4)
                                 <div class=" ">
-                                    <p class="flex items-center  text-center justify-center bg-yellow-300 text-gray-800 rounded ">Request Pengembailan</p>
+                                    <p class="flex items-center  text-center justify-center bg-yellow-300 text-gray-800 rounded ">Pengembailan Diajukan</p>
                                 </div>
                             @elseif($data->status == 5)
                                 <div class=" ">
@@ -155,15 +155,33 @@
                             Delete Data
                         </button>
                     </td>
+                    @elseif($data->status == 0)
+                    <td>
+                        <form action="{{ route('update_order_user', ['id' => $data->id]) }}" method="POST" >
+                            @method('put')
+                            @csrf
+                            <button type="submit" name="status" value="4" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ajukan Pengembailan</button>
+                        </form>
+                    </td>
                     @else
                     <td>
-                        <button data-modal-target="default-modalU{{$data->id}}" data-modal-toggle="default-modalU{{$data->id}}" class="block text-white bg-red hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-                            Delete Data
-                        </button>
+                        -
                     </td>
                     @endif
+
                     <td class="px-6 py-4">
-                        {{ $data->comments }}
+                        @if($data->status == 4)
+                         Hubungi Admin +6281323454678
+                        @elseif($data->status == 6)
+                        Anda Melewati Batas Selesai Sewa
+                            <p class="flex items-center  text-center justify-center bg-red text-white rounded "> Denda : Rp500.000</p>
+                        
+                        @else
+                            -
+                        @endif
+                    </td>
+                       
+
                     </td>
                 </tr>
 
