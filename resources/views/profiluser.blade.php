@@ -113,8 +113,8 @@
                         <span class="bg-yellow-100 text-white-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
                             @if($data->status == 1)
                             Belum Kirim Bukti
-                              @elseif($data->status == 2)
-                              Bukti Terkirim - Menunggu Verifikasi
+                            @elseif($data->status == 2)
+                            Bukti Terkirim - Menunggu Verifikasi
                             @endif
                         </span>
                     </td>
@@ -127,16 +127,13 @@
                             Upload Bukti Transfer
                         </a>
 
-                        <button data-modal-target="default-modalU{{$data->id}}" data-modal-toggle="default-modalU{{$data->id}}" class="block text-white bg-red-400 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                        <button data-modal-target="default-modalU{{$data->id}}" data-modal-toggle="default-modalU{{$data->id}}" class="block text-white bg-blue-400 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
                             Delete Data
                         </button>
                     </td>
                     @else
-                    <a href="{{route('payment' , ['id'=>$data->id])}}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-                        Upload Bukti Transfer
-                    </a>
                     <td>
-                        <button data-modal-target="default-modalU{{$data->id}}" data-modal-toggle="default-modalU{{$data->id}}" class="block text-white bg-red-400 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                        <button data-modal-target="default-modalU{{$data->id}}" data-modal-toggle="default-modalU{{$data->id}}" class="block text-white bg-blue-400 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
                            Delete Data
                         </button>
                     </td>
@@ -200,7 +197,7 @@
                                 <form method="post" action="{{route('transactions.destroy' , ['id'=>$data->id])}}">
                                     @csrf
                                     @method('delete')
-                                <button type="submit" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Hapus</button>
+                                <button type="submit" class="focus:outline-none text-white bg-blue-400 hover:bg-blue-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Hapus</button>
                                 </form>
                                 <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Batal</button>
                             </div>

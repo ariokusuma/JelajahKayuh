@@ -110,6 +110,11 @@ class OrdersController extends Controller
 
     }
 
+    public function payment($id){
+        $data = orders::find($id);
+        return view('pembayaran' , ['data'=>$data]);
+    }
+
     public function bukti($id , Request $request){
         // Menyimpan file ke dalam direktori yang diinginkan (misalnya, storage/app/public/bukti_transfer)
         $file = $request->file('bukti_transfer');

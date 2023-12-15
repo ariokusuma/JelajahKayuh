@@ -14,10 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 class ItemsController extends Controller
 {
-    public function payment($id){
-        $data = orders::find($id);
-        return view('pembayaran' , ['data'=>$data]);
-    }
+    
 
     public function getAllItemsData(): View
     {
