@@ -103,7 +103,7 @@
             <div class="border-2 border-dashed rounded-lg border-gray-300  h-32 md:h-64">
                 {{-- Total Denda --}}
                 <div class="w-auto ">
-                    <a href="{{ url('dashboard-pengguna') }}" class="  flex flex-col items-center px-[22px] bg-red border  h-32 md:h-64 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-red2">
+                    <a href="{{ url('dashboard-orders') }}" class="  flex flex-col items-center px-[22px] bg-red border  h-32 md:h-64 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-red2">
 
                         <div class="">
                             {{-- Icons --}}
@@ -117,7 +117,7 @@
                         </div>
 
                         <div class="flex flex-col p-4 leading-normal">
-                            <h5 class="mb-1 pt-1 text-2xl font-bold tracking-tight text-white dark:text-white">{{ $total_orders }}</h5>
+                            <h5 class="mb-1 pt-1 text-2xl font-bold tracking-tight text-white dark:text-white">{{ $total_penalty }}</h5>
                             <p class="mb-1 font-bold text-2xl text-white dark:text-gray-400">Denda</p>
                         </div>
                     </a>

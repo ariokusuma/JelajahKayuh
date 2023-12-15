@@ -30,8 +30,16 @@
                                 class="block text-sm text-gray-900 truncate ">{{ Auth::user()->role  == 0 ? 'Admin' : 'Personal' }}</span>
                         </div>
                         <ul class="py-1 text-gray-700 dark:text-gray-300" aria-labelledby="dropdown">
+                            @if (Auth::user()->role==0)
+
                             <li>
-                                <a href="profiluser"
+                                <div class="py-2">
+                                    <a href="{{ url('dashboard') }}" class="block py-2 px-4 text-sm hover:bg-primary hover:text-white">Dashboard</a>
+                                </div>
+                            </li>
+                            @endif
+                            <li>
+                                <a href="{{ url('myprofile') }}"
                                     class="block py-2 px-4 text-sm hover:bg-primary hover:text-white">My profile</a>
                             </li>
                             {{-- Log Out --}}

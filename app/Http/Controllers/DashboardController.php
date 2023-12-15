@@ -25,6 +25,7 @@ class DashboardController extends Controller
             $total_users = $controller->sumTotalUsers();
             $total_items = $controller->sumTotalItems();
             $total_orders = $controller->sumTotalOrders();
+            $total_penalty= $controller->sumTotalPenalty();
 
             // dd($total_orders);
 
@@ -32,6 +33,7 @@ class DashboardController extends Controller
                 'total_users' => $total_users->total_users,
                 'total_items' => $total_items->total_items,
                 'total_orders' => $total_orders->total_orders,
+                'total_penalty' => $total_penalty->total_penalty
             ]);
         }
 
@@ -52,7 +54,11 @@ class DashboardController extends Controller
         $total_users = orders::count();
         return view('admin.dashboard', ['total_orders' => $total_users]);
     }
-
+    private function sumTotalPenalty(): View
+    {
+        $total_penalty = orders::where('status', 6)->count();
+        return view('admin.dashboard', ['total_penalty' => $total_penalty]);
+    }
 
 
 
@@ -83,7 +89,7 @@ class DashboardController extends Controller
     }
 
     public function add_user_action(Request $request) {
-        // dd($request->all());
+        // dd($request->toArray());
         $request->validate([
             'name' => 'required',
             'nohp' => 'required',
@@ -200,9 +206,34 @@ class DashboardController extends Controller
         return view('admin.dashboard_items', ['AllItemsData' => $AllItemsData, 'categories' => $categories]);
     }
 
+    public function cari(Request $request)
+	{
+		// menangkap data pencarian
+		// $cari = $request->cari;
+        $cari = $request->input('cari');
+
+    		// mengambil data dari table items sesuai pencarian data
+        $AllItemsData = items::where('item_name', 'like', '%' . $cari . '%')->get();
+		// $AllItemsData = DB::table('items')
+		// ->where('item_name','like',"%".$cari."%")->get();;
+        $pullCategories = categories::pluck('category_name','id');
+
+        foreach ($pullCategories as $categoryID => $categoryName) {
+            $categories[] = [
+                'id' => $categoryID,
+                'name' => $categoryName,
+            ];
+
+        }
+    		// mengirim data items ke view
+            // dd($AllItemsData->toArray());
+		return view('admin.dashboard_items',['AllItemsData' => $AllItemsData, 'categories' => $categories]);
+
+	}
+
 
     public function add_items(Request $request) {
-        // dd($request->all());
+        dd($request->toArray());
         $request->validate([
             'item_name' => 'required',
             'category' => 'required',
@@ -226,6 +257,12 @@ class DashboardController extends Controller
         }
 
         $user->save();
+
+        $response = [
+            'message' => 'Data Added Successfully',
+            'redirect' => route('dashboardItems')
+        ];
+
 
         return redirect()->route('dashboardItems')->with('success', 'Tambah Data Berhasil!');
     }
@@ -293,6 +330,7 @@ class DashboardController extends Controller
                                     settings(['locale' => 'id'])->
                                     forHumans(['short' => false]);
             $order->remainingTime = $remainingTime;
+            // dd($remainingTime);
 
             // Calculate Final Price
             $days = $endDate->diffInDays($startDate);
@@ -300,6 +338,17 @@ class DashboardController extends Controller
             $order->finalPrice = $finalPrice;
             // dd($days);
 
+            // Penalty Mechanism
+            if (now() > $endDate && $order->status != 5) {
+                $penaltyDays = now()->diffInDays($endDate);
+                // dd($penaltyDays);
+                $penaltyAmount = $penaltyDays * 150000;
+
+                $order->finalPrice += $penaltyAmount;
+                $order->remainingTime = 'Jumlah Denda: ' . $penaltyAmount;
+                $order->rentDuration = 'Telat: ' . $penaltyDays . ' hari';
+
+            }
         }
 
         return view('admin.dashboard_orders', ['AllUserData' => $AllOrdersData]);
@@ -396,4 +445,25 @@ public function delete_category($id) {
     return redirect('/dashboard-category');
 }
 
+
+public function update_order(Request $request, $id)
+{
+    // Validate other form fields as needed
+
+    // Update the status
+    $data = orders::findOrFail($id);
+    $data->status = $request->input('status');
+    $data->save();
+
+    // Redirect or respond as needed
+    return redirect('/dashboard-orders');
 }
+
+
+
+}
+
+
+
+
+

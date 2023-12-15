@@ -23,36 +23,12 @@
             <div class="mx-auto max-w-screen px-0">
                 <!-- Start coding here -->
                 <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
-                    <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-                        <div class="w-full md:w-1/2">
-                            <form class="flex items-center">
-                                <label for="simple-search" class="sr-only">Search</label>
-                                <div class="relative w-full">
-                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                        <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
-                                    <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search" required="">
-                                </div>
-                            </form>
-                        </div>
-                        <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                            <a href="{{ route('add_order') }}" class="flex items-center justify-center text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
-                                <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                    <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
-                                </svg>
-                                Tambah Data
-                            </a>
-                        </div>
-                    </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-base text-left text-gray-500 dark:text-gray-400">
                             {{-- Table Header --}}
                             <thead class="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="px-4 py-3">Nama Peminjam</th>
-                                    <th scope="col" class="px-4 py-3">No. Hp</th>
                                     <th scope="col" class="px-4 py-3">Barang</th>
                                     <th scope="col" class="px-4 py-3">Kategori</th>
                                     <th scope="col" class="px-4 py-3">Total Harga Sewa</th>
@@ -69,7 +45,6 @@
                                 @foreach ($AllUserData as $data)
                                 <tr class="border-b dark:border-gray-700">
                                     <td class="px-4 py-3">{{ $data->user->name }}</td>
-                                    <td class="px-4 py-3">{{ $data->user->nohp }}</td>
                                     <td class="px-4 py-3">{{ $data->item->item_name }}</td>
                                     <td class="px-4 py-3">{{ $data->categories->category_name }}</td>
                                     <td class="px-4 py-3">Rp{{ $data->finalPrice }}</td>
@@ -77,12 +52,50 @@
                                     <td class="px-4 py-3">{{ $data->remainingTime }}</td>
                                     <td class="px-4 py-3">
                                         @if($data->payment_evidence)
-                                        <img class="w-24 h-24" src="{{ $data->payment_evidence }}" alt="evidence">
+                                        <img class="w-24 h-24" src="{{asset('bukti_transfer/' . $data->payment_evidence )}}" alt="evidence">
                                         @else
                                         <img class="w-24 h-24" src="{{ asset('storage/default_profile.png') }}" alt="default_pfp">
                                         @endif
                                     </td>
-                                    <td class="px-4 py-3">{{ $data->status }}</td>
+                                    <td class="px-4 py-3">
+
+                                            {{-- {{ $data->status }} --}}
+                                        <span class="text-white-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
+                                                @if($data->status == 1)
+                                                    <div class="">
+                                                        <p class="flex items-center text-center justify-center bg-red text-white rounded ">Belum Kirim Bukti</p>
+                                                    </div>
+                                                @elseif($data->status == 0)
+                                                    <div class=" ">
+                                                        <p class="flex items-center justify-center bg-green-500 text-white rounded ">Disetujui</p>
+                                                    </div>
+                                                @elseif($data->status == 2)
+                                                    <div class=" ">
+                                                        <p class="flex items-center  text-center justify-center bg-yellow-300 text-gray-800 rounded ">Bukti Terkirim - Menunggu Verifikasi</p>
+                                                    </div>
+                                                @elseif($data->status == 3)
+                                                    <div class=" ">
+                                                        <p class="flex items-center  text-center justify-center bg-yellow-300 text-gray-800 rounded ">Tolak</p>
+                                                    </div>
+                                                @elseif($data->status == 4)
+                                                    <div class=" ">
+                                                        <p class="flex items-center  text-center justify-center bg-yellow-300 text-gray-800 rounded ">Request Pengembailan</p>
+                                                    </div>
+                                                @elseif($data->status == 5)
+                                                    <div class=" ">
+                                                        <p class="flex items-center  text-center justify-center bg-green-500 text-white rounded ">Acc Pengembalian</p>
+                                                    </div>
+                                                @elseif($data->status == 6)
+                                                    <div class=" ">
+                                                        <p class="flex items-center  text-center justify-center bg-red text-white rounded ">Telat - Denda</p>
+                                                    </div>
+                                                @endif
+                                            </span>
+
+
+
+                                        {{-- {{ $data->status }} --}}
+                                    </td>
 
 
 
@@ -118,66 +131,21 @@
                                                         </div>
 
                                                         <!-- Modal body -->
-                                                        <form action="{{ route('update_item', ['id' => $data->id]) }}" method="POST" enctype="multipart/form-data">
+                                                        <form action="{{ route('update_order', ['id' => $data->id]) }}" method="POST" >
                                                             @method('put')
                                                             @csrf
                                                             <div class="pb-8 grid gap-4 mb-4 sm:grid-cols-3">
-                                                                {{-- Nama Barang --}}
-                                                                <div>
-                                                                    <label for="item_name" class="block mb-2 text-base text-start font-medium text-gray-900 ">Nama Penyewa</label>
-                                                                    <input value="{{ $data->user->name }}" required type="text" name="item_name" id="item_name" disabled class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-turqoise focus:border-turqoise block w-full p-2.5 " placeholder="BMX PRO Series">
-                                                                </div>
-                                                                {{-- No Hp --}}
-                                                                <div>
-                                                                    <label for="item_name" class="block mb-2 text-base text-start font-medium text-gray-900 ">No Hp Penyewa</label>
-                                                                    <input value="{{ $data->user->nohp }}" required type="text" name="item_name" id="item_name" disabled class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-turqoise focus:border-turqoise block w-full p-2.5 " placeholder="BMX PRO Series" >
-                                                                </div>
-                                                                {{-- Email --}}
-                                                                <div>
-                                                                    <label for="item_name" class="block mb-2 text-base text-start font-medium text-gray-900 ">Email Penyewa</label>
-                                                                    <input value="{{ $data->user->email }}" required type="text" name="item_name" id="item_name" disabled class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-turqoise focus:border-turqoise block w-full p-2.5 " placeholder="BMX PRO Series">
-                                                                </div>
-                                                                {{-- Nama Barang --}}
-                                                                <div >
-                                                                    <label for="item_name" class="block mb-2  mt-4 text-base text-start font-medium text-gray-900 ">Nama Barang</label>
-                                                                    <input value="{{ $data->item->item_name }}" required type="text" name="item_name" id="item_name" disabled class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-turqoise focus:border-turqoise block w-full p-2.5 " placeholder="BMX PRO s">
-                                                                </div>
 
-                                                                {{-- Kategori --}}
-                                                                <div >
-                                                                    <label for="category" class="block mb-2 mt-4 text-base text-start font-medium text-gray-900 ">Kategori Barang</label>
-                                                                    <input value="{{ $data->categories->category_name }}" required type="text" name="item_name" id="item_name" disabled class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-turqoise focus:border-turqoise block w-full p-2.5 " placeholder="BMX PRO s">
-                                                                    {{-- <select name="category" id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"> --}}
-                                                                        {{-- @foreach($categories as $category)
-                                                                            <option {{ $category == $data->category ? 'selected' : '' }} value="{{ $category }}">{{ $category }}</option>
-                                                                        @endforeach --}}
-                                                                        {{-- <option selected value="{{ $data->category }}">{{ $data->categories->category_name }}</option> --}}
-                                                                    {{-- </select> --}}
-                                                                </div>
-                                                                    {{-- Harga --}}
-                                                                    <div>
-                                                                        <label for="price" class="block mb-2 mt-4 text-base text-start font-medium text-gray-900 ">Harga</label>
-                                                                        <input value="Rp{{ $data->finalPrice }}" type="text" name="price" id="price" disabled class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-turqoise focus:border-turqoise block w-full p-2.5 " placeholder="asep@mail.com" required="">
-                                                                    </div>
-                                                                    {{-- Durasi --}}
-                                                                    <div>
-                                                                        <label for="price" class="block mb-2 mt-4 text-base text-start font-medium text-gray-900 ">Durasi Pinjam</label>
-                                                                        <input value="{{ $data->rentDuration }}" type="text" name="price" id="price" disabled class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-turqoise focus:border-turqoise block w-full p-2.5 " placeholder="asep@mail.com" required="">
-                                                                    </div>
-                                                                    {{-- Sisa Durasi --}}
-                                                                    <div class="sm:col-span-2">
-                                                                        <label for="price" class="block mb-2 mt-4 text-base text-start font-medium text-gray-900 ">Sisa Durasi Pinjam</label>
-                                                                        <input value="{{ $data->remainingTime }}" type="text" name="price" id="price" disabled class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-turqoise focus:border-turqoise block w-full p-2.5 " placeholder="asep@mail.com" required="">
-                                                                    </div>
-                                                                {{-- Photo --}}
-                                                                <div class="sm:col-span-2">
-                                                                    <label for="item_name" class="block mb-2 mt-4 text-base text-start font-medium text-gray-900 ">Bukti Bayar</label>
-                                                                    <img class="w-64 h-auto items-center" src="{{ $data->payment_evidence }}" alt="evidence">
-                                                                </div>
                                                                 {{-- Status --}}
                                                                 <div class="sm:col-span-3">
-                                                                    <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
-                                                                    <input value="{{ $data->status }}" type="text" name="price" id="price" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="asep@mail.com" required="">
+                                                                    <label for="status" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
+                                                                    <select id="status" name="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                                        <option value="0" @if($data->status == 0) selected @endif>Disetujui</option>
+                                                                        <option value="3" @if($data->status == 3) selected @endif>Tolak</option>
+                                                                        <option value="5" @if($data->status == 5) selected @endif>Acc Pengembalian</option>
+                                                                        <option value="6" @if($data->status == 6) selected @endif>Telat - Denda</option>
+                                                                        <!-- Add other options as needed -->
+                                                                    </select>
                                                                 </div>
 
                                                             </div>
