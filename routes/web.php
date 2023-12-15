@@ -99,6 +99,8 @@ Route::GET('/deleteitem/{id}', [DashboardController::class, 'delete_item'])->nam
 // CRUD Orders
 Route::GET('add/order', [DashboardController::class, 'order'])->name('add_order');
 Route::POST('add/order', [DashboardController::class, 'add_order'])->name('add_order_action');
+Route::put('update_order/{id}', [DashboardController::class, 'update_order'])->name('update_order');
+
 
 // CRUD Categories
 // Route::GET('add/category', [DashboardController::class, 'items'])->name('add_category');
@@ -112,6 +114,7 @@ Route::GET('/delete/category/{id}', [DashboardController::class, 'delete_categor
 Route::GET('/myprofile', [OrdersController::class, 'getAllOrdersData']);
 Route::get('/pemesanan/{id}', [OrdersController::class, 'getdetailpemesanan']);
 Route::post('/pemesanan/{id}', [OrdersController::class, 'postdetailpemesanan'])->name('pesan');
+Route::put('/myprofile/{id}', [OrdersController::class, 'update_order_user'])->name('update_order_user');
 Route::post('/bukti/{id}', [OrdersController::class, 'bukti'])->name('bukti');
 // Dashboard
 
