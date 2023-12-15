@@ -27,6 +27,7 @@
                         <div class="w-full md:w-1/2">
                             {{-- Search Bar --}}
                             <form action="{{ route("cari") }} " class="flex items-center" method="GET">
+                                @csrf
                                 <label for="simple-search" class="sr-only">Search</label>
                                 <div class="relative w-full">
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -42,14 +43,90 @@
                             </form>
 
                         </div>
+
+                        {{-- Add Data New --}}
                         <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                            <a href="{{ route('add_data') }}" type="button" class="flex items-center justify-center text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                            <button id="tambahDataButton" data-modal-target="tambahData" data-modal-toggle="tambahData" class="flex items-center justify-center text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-base px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" type="button">
                                 <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                     <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                                 </svg>
-                                Tambah Data
-                            </a>
+                                Tambah Data Sepeda
+                            </button>
                         </div>
+                        <!-- Main modal -->
+                        <div id="tambahData" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
+                            <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                                <!-- Modal content -->
+                                <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+                                    <!-- Modal header -->
+                                    <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
+                                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                            Tambah Data Sepeda
+                                        </h3>
+                                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="tambahData">
+                                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                            <span class="sr-only">Close modal</span>
+                                        </button>
+                                    </div>
+                                    <!-- Modal body -->
+                                    <form id="formItems" action="{{ route('add_data.action') }}" method="POST" class="space-y-6" enctype="multipart/form-data" >
+                                        @csrf
+                                        {{-- Nama Item --}}
+                                        <div>
+                                            <label for="item_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Sepeda</label>
+                                            <input type="text" name="item_name" id="item_name" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Wincycle" required="">
+                                        </div>
+                                            {{-- Kategori --}}
+                                            <div>
+                                                <label for="category" class="block mb-2 mt-4 text-base text-start font-medium text-gray-900 ">Kategori</label>
+                                                <select name="category" id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                                    <option disabled selected>Select a category</option>
+
+                                                    {{-- Existing Categories --}}
+                                                    @foreach($categories as $category)
+                                                        <option  value="{{ $category['id'] }}">{{ $category['name'] }}</option>
+                                                    @endforeach
+
+                                                    {{-- New Category --}}
+                                                    <option value="new">Add New Category</option>
+                                                </select>
+                                            </div>
+                                        {{-- desc --}}
+                                        <div>
+                                            <label for="desc" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">deskripsi</label>
+                                            <input type="text" name="desc" id="desc" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="sepeda anak" required="">
+                                        </div>
+                                        {{-- Harga --}}
+                                        <div>
+                                            <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga Sewa</label>
+                                            <input type="text" name="price" id="price" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="20000" required="">
+                                        </div>
+                                        {{-- Photo --}}
+                                        <div>
+                                            <label for="photo" class="block mb-2 text-sm font-medium text-gray-900">Upload Foto</label>
+                                            <input type="file" name="photo" id="photo" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50  focus:outline-none" aria-describedby="file_input_help" id="file_input" >
+                                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">Format yang diterima : JPEG, PNG, JPG Maks, 2 Mb</p>
+                                        </div>
+                                        <div class="mt-8">
+
+                                            <button type="submit" class=" text-white inline-flex items-center bg-primary hover:bg-primary2 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                                <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+                                                Tambahkan Data Sepeda
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        {{-- End Add Data New --}}
+
+
+
+
+
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-base text-left text-gray-500 dark:text-gray-400">
@@ -79,7 +156,7 @@
                                                     <div class="pl-4 grid auto-cols-max">
                                                         {{-- <img class="w-16 h-16 aspect-square rounded-full" src="{{ asset('upload/foto-profile/' . auth()->user()->foto) }}" alt="user_pfp"> --}}
                                                         @if ($data->photo)
-                                                            <img class="w-24 h-24 aspect-square rounded" src="{{ $data->photo }}">
+                                                            <img class="w-24 h-24 aspect-square rounded" src="{{ asset($data->photo) }}">
                                                         @else
                                                             <img class="w-24 h-24 aspect-square rounded" src="{{ asset('storage/default_profile.png') }}" alt="default_pfp">
                                                         @endif
@@ -298,9 +375,8 @@
 
     </div>
 
-
-
     <script src="{{ asset('js/flowbite.js') }}"></script>
+
 
     </body>
 
