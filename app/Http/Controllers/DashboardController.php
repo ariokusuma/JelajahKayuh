@@ -203,7 +203,7 @@ class DashboardController extends Controller
 	{
 		// menangkap data pencarian
 		$cari = $request->cari;
- 
+
     		// mengambil data dari table items sesuai pencarian data
 		$AllItemsData = DB::table('items')
 		->where('item_name','like',"%".$cari."%")->get();;
@@ -213,9 +213,9 @@ class DashboardController extends Controller
             'Sepeda Lipat',
             'Sepeda Listrik',
         ];
-    		// mengirim data items ke view 
+    		// mengirim data items ke view
 		return view('admin.dashboard_items',['AllItemsData' => $AllItemsData, 'categories' => $categories]);
- 
+
 	}
 
 
@@ -311,13 +311,25 @@ class DashboardController extends Controller
                                     settings(['locale' => 'id'])->
                                     forHumans(['short' => false]);
             $order->remainingTime = $remainingTime;
-
+            // dd($remainingTime);
+            
             // Calculate Final Price
             $days = $endDate->diffInDays($startDate);
             $finalPrice =  number_format($days * $order->item->price, 0, ',', '.');
             $order->finalPrice = $finalPrice;
             // dd($days);
 
+            // Penalty Mechanism
+            if (now() > $endDate && $order->status != 5) {
+                $penaltyDays = now()->diffInDays($endDate);
+                // dd($penaltyDays);
+                $penaltyAmount = $penaltyDays * 150000;
+
+                $order->finalPrice += $penaltyAmount;
+                $order->remainingTime = 'Jumlah Denda: ' . $penaltyAmount;
+                $order->rentDuration = 'Telat: ' . $penaltyDays . ' hari';
+
+            }
         }
 
         return view('admin.dashboard_orders', ['AllUserData' => $AllOrdersData]);

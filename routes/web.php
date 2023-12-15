@@ -62,6 +62,7 @@ Route::GET('dashboard-items', [DashboardController::class, 'getAllItemsData'])->
 Route::GET('dashboard-items/cari', [DashboardController::class, 'cari'])->name('cari');
 Route::GET('dashboard-category', [DashboardController::class, 'getAllCategoryData'])->name('dashboardCategory');
 Route::GET('dashboard-orders', [DashboardController::class, 'getAllOrdersData'])->name('dashboardOrders');
+Route::GET('dashboard-penalty', [DashboardController::class, 'getAllPenaltyData'])->name('dashboardPenalty');
 
 
 

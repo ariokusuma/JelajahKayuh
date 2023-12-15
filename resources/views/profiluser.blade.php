@@ -23,7 +23,7 @@
     <div class="px-4 mx-auto pb-12">
         <div class="flex items-center justify-between px-64 py-4 text-gray-900 whitespace-nowrap dark:text-white">
             <div class="flex items-center gap-2  ">
-                <img class="w-24 h-24 rounded-full" src="https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?q=80&w=1868&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Jese image">
+                <img class="w-24 h-24 rounded-full" src="{{ Auth::user()->photo }}" alt="Jese image">
                 <div class="ps-3">
                     <div class="text-xl font-semibold">{{\Illuminate\Support\Facades\Auth::user()->name}}</div>
                     <div class="text-lg font-normal text-gray-400">{{\Illuminate\Support\Facades\Auth::user()->email}}</div>
@@ -110,15 +110,39 @@
                         <img class="w-24 h-24" src="{{asset('bukti_transfer/' . $data->payment_evidence )}}" alt="evidence">
                     </td>
                     <td class="px- py-4">
-                        <span class="bg-yellow-100 text-white-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
+                        <span class="text-white-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
                             @if($data->status == 1)
-                            Belum Kirim Bukti
+                                <div class="">
+                                    <p class="flex items-center text-center justify-center bg-red text-white rounded ">Belum Kirim Bukti</p>
+                                </div>
+                            @elseif($data->status == 0)
+                                <div class=" ">
+                                    <p class="flex items-center justify-center bg-green-500 text-white rounded ">Disetujui</p>
+                                </div>
                             @elseif($data->status == 2)
-                            Bukti Terkirim - Menunggu Verifikasi
+                                <div class=" ">
+                                    <p class="flex items-center  text-center justify-center bg-yellow-300 text-gray-800 rounded ">Bukti Terkirim - Menunggu Verifikasi</p>
+                                </div>
+                            @elseif($data->status == 3)
+                                <div class=" ">
+                                    <p class="flex items-center  text-center justify-center bg-yellow-300 text-gray-800 rounded ">Ditolak</p>
+                                </div>
+                            @elseif($data->status == 4)
+                                <div class=" ">
+                                    <p class="flex items-center  text-center justify-center bg-yellow-300 text-gray-800 rounded ">Request Pengembailan</p>
+                                </div>
+                            @elseif($data->status == 5)
+                                <div class=" ">
+                                    <p class="flex items-center  text-center justify-center bg-green-500 text-white rounded "> Pengembalian diterima</p>
+                                </div>
+                            @elseif($data->status == 6)
+                                <div class=" ">
+                                    <p class="flex items-center  text-center justify-center bg-red text-white rounded "> Telat - Denda</p>
+                                </div>
                             @endif
                         </span>
                     </td>
-                    
+
                     <!-- Modal toggle -->
 
                     @if($data->status == 1)
@@ -127,14 +151,14 @@
                             Upload Bukti Transfer
                         </a>
 
-                        <button data-modal-target="default-modalU{{$data->id}}" data-modal-toggle="default-modalU{{$data->id}}" class="block text-white bg-blue-400 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                        <button data-modal-target="default-modalU{{$data->id}}" data-modal-toggle="default-modalU{{$data->id}}" class="block text-white bg-red hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
                             Delete Data
                         </button>
                     </td>
                     @else
                     <td>
-                        <button data-modal-target="default-modalU{{$data->id}}" data-modal-toggle="default-modalU{{$data->id}}" class="block text-white bg-blue-400 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-                           Delete Data
+                        <button data-modal-target="default-modalU{{$data->id}}" data-modal-toggle="default-modalU{{$data->id}}" class="block text-white bg-red hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                            Delete Data
                         </button>
                     </td>
                     @endif
@@ -182,7 +206,7 @@
                             <!-- Modal header -->
                             <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                   Edit Data
+                                    Edit Data
                                 </h3>
                                 <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modalU{{$data->id}}">
                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">

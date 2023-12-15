@@ -39,7 +39,7 @@
                             </li>
                             @endif
                             <li>
-                                <a href="myprofile"
+                                <a href="{{ url('myprofile') }}"
                                     class="block py-2 px-4 text-sm hover:bg-primary hover:text-white">My profile</a>
                             </li>
                             {{-- Log Out --}}
