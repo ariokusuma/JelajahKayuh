@@ -109,8 +109,9 @@ class UserController extends Controller
             }
         }
 
-        return back()->withErrors([
-            'email' => 'Gagal Login',
+        // return back()->withErrors([
+        return back()->with([
+            'loginError' => 'Gagal Login',
         ])->onlyInput('email');
     }
 

@@ -39,4 +39,15 @@
                 </div>
             </div>
         </div>
+
+        <script src="{{ asset('js/toastr.js') }}"></script>
+
+        <script>
+                // toastr.success('This is a test notification');
+
+            // @if(session('loginError'))
+                toastr.error('{{ session('loginError') }}');
+            // @endif
+        </script>
+
 @endsection
